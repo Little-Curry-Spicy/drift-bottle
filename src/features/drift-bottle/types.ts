@@ -1,6 +1,6 @@
-export type Mood = "开心" | "迷茫" | "焦虑" | "期待";
+export type Mood = "Calm" | "Confused" | "Anxious" | "Hopeful";
 
-export type BottleAuthor = "我" | "陌生人";
+export type BottleAuthor = "me" | "stranger";
 
 export type Bottle = {
   id: string;

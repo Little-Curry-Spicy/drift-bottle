@@ -20,12 +20,12 @@ export function DriftBottleScreen() {
     <SafeAreaView edges={["left", "right", "bottom"]} className="flex-1 bg-background pt-2">
       <Animated.View entering={FadeIn.duration(280)} style={{ paddingHorizontal: horizontalPadding }}>
         <Animated.View className="rounded-3xl border border-border/70 bg-card/90 px-5 pb-4 pt-5">
-          <Text className="text-[30px] font-sans-bold text-foreground">漂流瓶</Text>
+          <Text className="text-[30px] font-sans-bold text-foreground">Drift Bottle</Text>
           <Text className="mt-1.5 text-base leading-6 text-muted-foreground">
-            匿名分享心情，随机连接同频的人
+            Share a feeling anonymously and connect with someone who resonates.
           </Text>
           <Text className="mt-3 text-xs text-muted-foreground/85">
-            本地模拟体验：扔瓶子、捞瓶子、回复、收藏
+            Local MVP: drop, catch, reply, and save.
           </Text>
         </Animated.View>
       </Animated.View>
@@ -35,9 +35,9 @@ export function DriftBottleScreen() {
         className="flex-row flex-wrap gap-3 pb-4 pt-5"
         style={{ paddingHorizontal: horizontalPadding }}
       >
-        <StatCard label="我扔出" value={stats.thrown} />
-        <StatCard label="已收藏" value={stats.favorite} />
-        <StatCard label="总回复" value={stats.replied} />
+        <StatCard label="Dropped" value={stats.thrown} />
+        <StatCard label="Saved" value={stats.favorite} />
+        <StatCard label="Replies" value={stats.replied} />
       </Animated.View>
 
       <ScrollView
@@ -73,16 +73,16 @@ export function DriftBottleScreen() {
           )}
           {state.activeTab === "favorites" && (
             <BottleList
-              title="我的收藏"
+              title="Saved bottles"
               data={state.favorites}
-              emptyText="你还没有收藏任何瓶子。"
+              emptyText="No saved bottles yet."
             />
           )}
           {state.activeTab === "mine" && (
             <BottleList
-              title="我的瓶子"
+              title="My bottles"
               data={state.myBottles}
-              emptyText="你还没有扔出任何瓶子。"
+              emptyText="You have not dropped any bottles yet."
             />
           )}
         </Animated.View>

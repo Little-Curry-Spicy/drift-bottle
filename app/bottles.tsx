@@ -1,5 +1,5 @@
-import { Redirect } from "expo-router";
 import { useAuth } from "@clerk/clerk-expo";
+import { Redirect } from "expo-router";
 import { DriftBottleScreen } from "../src/features/drift-bottle/screens/DriftBottleScreen";
 
 export default function BottlesPage() {

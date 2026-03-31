@@ -32,7 +32,7 @@ const initialState: State = {
   myBottles: [],
   favorites: [],
   draft: "",
-  selectedMood: "期待",
+  selectedMood: "Hopeful",
   replyDraft: "",
   currentBottle: null,
   toast: "",
@@ -130,7 +130,7 @@ export function useDriftBottleMvp() {
   const throwBottle = useCallback(() => {
     const content = state.draft.trim();
     if (!content) {
-      showToast("先写点内容再扔出去");
+      showToast("Write something before you drop a bottle.");
       return;
     }
 
@@ -138,19 +138,19 @@ export function useDriftBottleMvp() {
       id: `my-${Date.now()}`,
       content,
       mood: state.selectedMood,
-      author: "我",
+      author: "me",
       replies: [],
-      createdAt: "刚刚",
+      createdAt: "just now",
     };
     dispatch({ type: "THROW_BOTTLE", payload: bottle });
-    showToast("漂流瓶已扔进海里");
+    showToast("Bottle dropped into the sea.");
   }, [state.draft, state.selectedMood, showToast]);
 
   const catchRandomBottle = useCallback(() => {
-    const strangers = state.seaBottles.filter((item) => item.author === "陌生人");
+    const strangers = state.seaBottles.filter((item) => item.author === "stranger");
     if (!strangers.length) {
       dispatch({ type: "PICK_BOTTLE", payload: null });
-      showToast("海里暂时没有新瓶子");
+      showToast("No new bottles in the sea right now.");
       return;
     }
     const picked = strangers[Math.floor(Math.random() * strangers.length)];
@@ -160,11 +160,11 @@ export function useDriftBottleMvp() {
   const addFavorite = useCallback(
     (bottle: Bottle) => {
       if (state.favorites.some((item) => item.id === bottle.id)) {
-        showToast("已经收藏过了");
+        showToast("Already saved.");
         return;
       }
       dispatch({ type: "ADD_FAVORITE", payload: bottle });
-      showToast("收藏成功");
+      showToast("Saved to your collection.");
     },
     [state.favorites, showToast],
   );
@@ -173,14 +173,14 @@ export function useDriftBottleMvp() {
     if (!state.currentBottle) return;
     const content = state.replyDraft.trim();
     if (!content) {
-      showToast("回复内容不能为空");
+      showToast("Reply cannot be empty.");
       return;
     }
     dispatch({
       type: "ADD_REPLY",
       payload: { bottleId: state.currentBottle.id, content },
     });
-    showToast("已送出回复");
+    showToast("Reply sent.");
   }, [state.currentBottle, state.replyDraft, showToast]);
 
   return {

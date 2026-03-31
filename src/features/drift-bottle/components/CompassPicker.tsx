@@ -18,7 +18,7 @@ type CompassPickerProps = {
 };
 
 function degreeToDirection(angle: number) {
-  const labels = ["北", "东北", "东", "东南", "南", "西南", "西", "西北"];
+  const labels = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
   const index = Math.round(angle / 45) % 8;
   return labels[index];
 }
@@ -139,7 +139,7 @@ export function CompassPicker({
   const planeStyle = useAnimatedStyle(() => {
     const easedPower = 1 - Math.pow(1 - Math.min(dragPower.value, 1), 3);
     const planeScale = 1 + easedPower * 0.95;
-    // 机头严格指向拖拽方向的反方向（弹弓手感）。
+    // Keep the plane nose opposite to drag direction for slingshot feel.
     const oppositeRotate = (pointerRotate.value + 180) % 360;
     return {
       transform: [
@@ -154,13 +154,13 @@ export function CompassPicker({
   return (
     <View className="items-center">
       <View className="mb-3 flex-row items-center gap-3">
-        <Text className="text-sm text-muted-foreground">抛出角度</Text>
+        <Text className="text-sm text-muted-foreground">Angle</Text>
         <Text className="font-sans-semibold text-foreground">{Math.round(angle)}°</Text>
         <Text className="rounded-full bg-muted px-2.5 py-1 text-xs text-foreground">
           {degreeToDirection(angle)}
         </Text>
         <Text className="rounded-full bg-background px-2.5 py-1 text-xs text-muted-foreground">
-          蓄力 {Math.round(power * 100)}%
+          Power {Math.round(power * 100)}%
         </Text>
       </View>
 

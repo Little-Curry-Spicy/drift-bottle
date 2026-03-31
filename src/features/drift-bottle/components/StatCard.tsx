@@ -8,9 +8,9 @@ type StatCardProps = {
 
 export function StatCard({ label, value }: StatCardProps) {
   const iconName =
-    label === "我扔出"
+    label === "Dropped"
       ? "paper-plane"
-      : label === "已收藏"
+      : label === "Saved"
         ? "heart"
         : "chatbubble-ellipses";
 

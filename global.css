@@ -5,15 +5,15 @@
 @import "nativewind/theme";
 
 @theme {
-  --color-background: #effaf3;
-  --color-foreground: #0f2b1d;
-  --color-card: #f8fffb;
-  --color-muted: #dcf7e7;
-  --color-muted-foreground: rgba(15, 43, 29, 0.62);
-  --color-primary: #15803d;
-  --color-accent: #16a34a;
-  --color-border: rgba(22, 163, 74, 0.2);
-  --color-success: #16a34a;
+  --color-background: #f4f7f5;
+  --color-foreground: #14241d;
+  --color-card: #fbfdfc;
+  --color-muted: #e7f1ec;
+  --color-muted-foreground: rgba(20, 36, 29, 0.62);
+  --color-primary: #1f7a4f;
+  --color-accent: #2f9463;
+  --color-border: rgba(31, 122, 79, 0.18);
+  --color-success: #2f9463;
   --color-destructive: #dc2626;
   --color-subscription: #8fd1bd;
 

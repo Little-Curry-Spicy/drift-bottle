@@ -29,10 +29,10 @@ export function SeaTab({
       >
         <View className="flex-row items-center gap-2">
           <Ionicons name="compass" size={18} color="#15803d" />
-          <Text className="text-lg font-sans-semibold text-foreground">捞一个漂流瓶</Text>
+          <Text className="text-lg font-sans-semibold text-foreground">Catch a bottle</Text>
         </View>
         <Text className="mt-2 text-sm leading-6 text-muted-foreground">
-          随机遇见一位陌生人的心情故事
+          Meet an anonymous story from someone out there.
         </Text>
         <TouchableScale
           onPress={onCatchBottle}
@@ -41,7 +41,7 @@ export function SeaTab({
         >
           <View className="flex-row items-center gap-2">
             <Ionicons name="fish" size={16} color="#ffffff" />
-            <Text className="font-sans-semibold text-white">开始捞瓶</Text>
+            <Text className="font-sans-semibold text-white">Catch now</Text>
           </View>
         </TouchableScale>
       </Animated.View>
@@ -63,7 +63,7 @@ export function SeaTab({
             <TextInput
               value={replyDraft}
               onChangeText={onReplyDraftChange}
-              placeholder="写一句回复..."
+              placeholder="Write a reply..."
               placeholderTextColor="rgba(15, 43, 29, 0.45)"
               className="rounded-2xl border border-border bg-background px-4 py-3.5 text-foreground"
             />
@@ -75,7 +75,7 @@ export function SeaTab({
               >
                 <View className="flex-row items-center gap-1.5">
                   <Ionicons name="chatbubble-ellipses" size={15} color="#eff6ff" />
-                  <Text className="font-sans-semibold text-background">发送回复</Text>
+                  <Text className="font-sans-semibold text-background">Send reply</Text>
                 </View>
               </TouchableScale>
               <TouchableScale
@@ -85,7 +85,7 @@ export function SeaTab({
               >
                 <View className="flex-row items-center gap-1.5">
                   <Ionicons name="heart" size={15} color="#15803d" />
-                  <Text className="font-sans-semibold text-foreground">收藏</Text>
+                  <Text className="font-sans-semibold text-foreground">Save</Text>
                 </View>
               </TouchableScale>
             </View>
@@ -94,7 +94,7 @@ export function SeaTab({
       ) : (
         <View className="rounded-3xl border border-dashed border-border/80 bg-card px-5 py-4">
           <Text className="text-sm leading-6 text-muted-foreground">
-            点击上方按钮后，这里会展示你捞到的瓶子。
+            Your caught bottle will appear here.
           </Text>
         </View>
       )}

@@ -14,7 +14,7 @@ export function BottleList({ title, data, emptyText }: BottleListProps) {
     <View className="gap-4">
       <View className="flex-row items-center gap-2">
         <Ionicons
-          name={title === "我的收藏" ? "heart-circle" : "albums"}
+          name={title === "Saved bottles" ? "heart-circle" : "albums"}
           size={18}
           color="#15803d"
         />
@@ -35,7 +35,7 @@ export function BottleList({ title, data, emptyText }: BottleListProps) {
             </View>
             <Text className="leading-7 text-foreground">{item.content}</Text>
             <Text className="mt-3 text-xs text-muted-foreground">
-              回复 {item.replies.length} 条
+              {item.replies.length} replies
             </Text>
           </Animated.View>
         ))

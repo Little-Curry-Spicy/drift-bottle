@@ -29,17 +29,17 @@ export function ThrowTab({
       >
         <View className="flex-row items-center gap-2">
           <Ionicons name="paper-plane" size={18} color="#15803d" />
-          <Text className="text-lg font-sans-semibold text-foreground">扔一个漂流瓶</Text>
+          <Text className="text-lg font-sans-semibold text-foreground">Drop a bottle</Text>
         </View>
         <Text className="mt-2 text-sm leading-6 text-muted-foreground">
-          写下你现在的想法，匿名漂向远方
+          Write what is on your mind and send it anonymously.
         </Text>
         <TextInput
           value={draft}
           onChangeText={onDraftChange}
           multiline
           maxLength={200}
-          placeholder="这一刻你想说点什么..."
+          placeholder="What do you want to share right now?"
           placeholderTextColor="rgba(15, 43, 29, 0.45)"
           className="mt-5 min-h-28 rounded-2xl border border-border bg-background p-4 text-foreground"
         />
@@ -50,9 +50,9 @@ export function ThrowTab({
         entering={FadeInUp.delay(80).duration(260)}
         className="rounded-3xl border border-border/70 bg-card px-5 py-5"
       >
-        <Text className="mb-2 text-sm font-sans-medium text-foreground">选择抛出方向</Text>
+        <Text className="mb-2 text-sm font-sans-medium text-foreground">Pick a direction</Text>
         <Text className="mb-4 text-xs leading-5 text-muted-foreground">
-          手指在罗盘上拖动，模拟把瓶子抛向不同方向
+          Drag on the compass to choose where your bottle goes.
         </Text>
         <CompassPicker />
       </Animated.View>
@@ -61,7 +61,7 @@ export function ThrowTab({
         entering={FadeInUp.delay(120).duration(260)}
         className="rounded-3xl border border-border/70 bg-card px-5 py-5"
       >
-        <Text className="mb-3 text-sm font-sans-medium text-foreground">选择心情标签</Text>
+        <Text className="mb-3 text-sm font-sans-medium text-foreground">Choose a mood</Text>
         <View className="flex-row flex-wrap gap-2">
           {moodOptions.map((mood) => {
             const active = selectedMood === mood;
@@ -84,7 +84,7 @@ export function ThrowTab({
         >
           <View className="flex-row items-center gap-2">
             <Ionicons name="send" size={15} color="#eff6ff" />
-            <Text className="font-sans-semibold text-background">扔进海里</Text>
+            <Text className="font-sans-semibold text-background">Drop into sea</Text>
           </View>
         </TouchableScale>
       </Animated.View>
