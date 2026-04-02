@@ -6,8 +6,16 @@
     "mobile:android": "pnpm --filter mobile android",
     "mobile:ios": "pnpm --filter mobile ios",
     "mobile:web": "pnpm --filter mobile web",
+    "web": "pnpm --filter web dev",
+    "web:build": "pnpm --filter web build",
+    "web:preview": "pnpm --filter web start",
     "api": "pnpm --filter api start:dev",
     "api:build": "pnpm --filter api build",
     "lint": "pnpm -r --if-present lint"
+  },
+  "pnpm": {
+    "overrides": {
+      "pretty-format": "29.7.0"
+    }
   }
 }

@@ -1,13 +1,20 @@
+import { authTheme } from "@/src/theme/auth";
 import { useAuth, useSSO, useSignUp } from "@clerk/clerk-expo";
 import { Ionicons } from "@expo/vector-icons";
 import { DotLottie } from "@lottiefiles/dotlottie-react-native";
 import { Link, Redirect } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 WebBrowser.maybeCompleteAuthSession();
+
+function getClerkErrorMessage(error: unknown, fallback: string) {
+  const maybe = error as { errors?: Array<{ longMessage?: string; message?: string }> };
+  const first = maybe?.errors?.[0];
+  return first?.longMessage || first?.message || fallback;
+}
 
 export default function SignUpPage() {
   const { isLoaded, isSignedIn } = useAuth();
@@ -21,14 +28,32 @@ export default function SignUpPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [oauthLoading, setOauthLoading] = useState<"" | "google" | "github">("");
+  const [resendCountdown, setResendCountdown] = useState(0);
+
+  useEffect(() => {
+    if (!pendingVerification || resendCountdown <= 0) return;
+    const timer = setTimeout(() => {
+      setResendCountdown((prev) => prev - 1);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [pendingVerification, resendCountdown]);
 
   if (!isLoaded) return null;
   if (isSignedIn) return <Redirect href="/bottles" />;
 
   const onSignUp = async () => {
+    if (!email.trim()) {
+      setError("请先输入邮箱。");
+      return;
+    }
+    if (password.trim().length < 6) {
+      setError("密码至少 6 位。");
+      return;
+    }
     try {
       setLoading(true);
       setError("");
+      setResendCountdown(60);
       await signUp?.create({
         emailAddress: email.trim(),
         password,
@@ -37,8 +62,9 @@ export default function SignUpPage() {
         strategy: "email_code",
       });
       setPendingVerification(true);
-    } catch {
-      setError("注册失败，请检查邮箱格式和密码强度。");
+    } catch (error) {
+      setResendCountdown(0);
+      setError(getClerkErrorMessage(error, "注册失败，请检查邮箱格式和密码强度。"));
     } finally {
       setLoading(false);
     }
@@ -56,8 +82,8 @@ export default function SignUpPage() {
       } else {
         setError("验证码验证未完成，请重试。");
       }
-    } catch {
-      setError("验证码无效或已过期。");
+    } catch (error) {
+      setError(getClerkErrorMessage(error, "验证码无效或已过期。"));
     } finally {
       setLoading(false);
     }
@@ -76,133 +102,201 @@ export default function SignUpPage() {
       } else {
         setError("第三方登录未完成，请重试。");
       }
-    } catch {
-      setError("第三方登录失败，请稍后重试。");
+    } catch (error) {
+      setError(getClerkErrorMessage(error, "第三方登录失败，请稍后重试。"));
     } finally {
       setOauthLoading("");
     }
   };
 
+  const onResendCode = async () => {
+    try {
+      setLoading(true);
+      setError("");
+      setResendCountdown(60);
+      await signUp?.prepareEmailAddressVerification({
+        strategy: "email_code",
+      });
+    } catch (error) {
+      setResendCountdown(0);
+      setError(getClerkErrorMessage(error, "验证码发送失败，请稍后重试。"));
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <SafeAreaView className="flex-1 bg-[#edf8f0] px-6">
+    <SafeAreaView className="flex-1 px-6" style={{ backgroundColor: authTheme.screenBg }}>
       <View className="mx-auto w-full max-w-[520px] flex-1 justify-center">
-        <View className="mb-8 items-center">
-          <View className="h-[150px] w-[150px] items-center justify-center overflow-hidden">
-            <DotLottie
-              source={require("../assets/lottie/running-Cat.lottie")}
-              autoplay
-              loop
-              style={{ width: 280, height: 280 }}
-            />
-          </View>
-          <View className="-mt-2 items-center">
-            <View>
-              <Text className="text-3xl font-sans-bold text-[#133222]">漂流瓶</Text>
-              <Text className="text-sm text-[#3a6c52]">BOTTLE SOCIAL</Text>
-            </View>
-          </View>
+        <View className="mx-auto w-[220px] items-center justify-center overflow-hidden">
+          <DotLottie
+            source={require("../assets/lottie/bootstrap.lottie")}
+            autoplay
+            loop
+            style={{ width: 220, height: 120 }}
+          />
         </View>
 
-        <View className="w-full rounded-3xl border border-[#c9e5d1] bg-[#f5fbf7] p-5">
-          <Text className="text-2xl font-sans-bold text-[#133222]">Create account</Text>
-          <Text className="mt-1 text-base text-[#466b58]">
-            Sign up to start throwing your first bottle
+        <View
+          className="mx-4 mb-12 rounded-3xl border p-5"
+          style={{ backgroundColor: authTheme.cardBg, borderColor: authTheme.cardBorder }}
+        >
+          <Text className="text-2xl font-sans-bold" style={{ color: authTheme.title }}>
+            Create account
+          </Text>
+          <Text className="mt-1 text-sm" style={{ color: authTheme.body }}>
+            填写邮箱、验证码与密码，在同一页完成注册。
           </Text>
 
-          {!pendingVerification ? (
-            <View className="mt-5 gap-4">
-              <View>
-                <Text className="mb-2 text-base font-sans-medium text-[#133222]">Email</Text>
-                <TextInput
-                  value={email}
-                  onChangeText={setEmail}
-                  placeholder="Enter your email"
-                  autoCapitalize="none"
-                  keyboardType="email-address"
-                  className="rounded-2xl border border-[#bfdbc8] bg-[#f8fdf9] px-4 py-3.5 text-[#133222]"
-                  placeholderTextColor="#5c7e6c"
-                />
-              </View>
-              <View>
-                <Text className="mb-2 text-base font-sans-medium text-[#133222]">Password</Text>
-                <TextInput
-                  value={password}
-                  onChangeText={setPassword}
-                  placeholder="At least 8 characters"
-                  secureTextEntry
-                  className="rounded-2xl border border-[#bfdbc8] bg-[#f8fdf9] px-4 py-3.5 text-[#133222]"
-                  placeholderTextColor="#5c7e6c"
-                />
-              </View>
-              {error ? <Text className="text-sm text-[#c73831]">{error}</Text> : null}
-              <Pressable
-                onPress={onSignUp}
-                disabled={loading}
-                className={`items-center rounded-2xl px-4 py-3.5 ${loading ? "bg-[#16a34a]/70" : "bg-[#16a34a]"}`}
-              >
-                <Text className="font-sans-semibold text-white">
-                  {loading ? "Creating..." : "Create & send code"}
-                </Text>
-              </Pressable>
-
-              <View className="my-1 flex-row items-center gap-3">
-                <View className="h-px flex-1 bg-[#cfe6d6]" />
-                <Text className="text-xs text-[#60816e]">or continue with</Text>
-                <View className="h-px flex-1 bg-[#cfe6d6]" />
-              </View>
-
-              <View className="flex-row gap-3">
-                <Pressable
-                  onPress={() => onOAuthSignUp("google")}
-                  disabled={oauthLoading !== ""}
-                  className="flex-1 flex-row items-center justify-center gap-2 rounded-2xl border border-[#bfdbc8] bg-[#f8fdf9] px-4 py-3"
-                >
-                  <Ionicons name="logo-google" size={16} color="#0f2b1d" />
-                  <Text className="font-sans-medium text-[#133222]">
-                    {oauthLoading === "google" ? "Connecting..." : "Google"}
-                  </Text>
-                </Pressable>
-                <Pressable
-                  onPress={() => onOAuthSignUp("github")}
-                  disabled={oauthLoading !== ""}
-                  className="flex-1 flex-row items-center justify-center gap-2 rounded-2xl border border-[#bfdbc8] bg-[#f8fdf9] px-4 py-3"
-                >
-                  <Ionicons name="logo-github" size={16} color="#0f2b1d" />
-                  <Text className="font-sans-medium text-[#133222]">
-                    {oauthLoading === "github" ? "Connecting..." : "GitHub"}
-                  </Text>
-                </Pressable>
-              </View>
-            </View>
-          ) : (
-            <View className="mt-5 gap-4">
-              <Text className="text-sm text-[#4e6f5c]">
-                We sent a 6-digit code to {email}. Enter it below.
+          <View className="mt-2 gap-4">
+            <View>
+              <Text className="mb-2 text-base font-sans-medium" style={{ color: authTheme.label }}>
+                Email
               </Text>
               <TextInput
-                value={code}
-                onChangeText={setCode}
-                placeholder="Verification code"
-                keyboardType="number-pad"
-                className="rounded-2xl border border-[#bfdbc8] bg-[#f8fdf9] px-4 py-3.5 text-[#133222]"
-                placeholderTextColor="#5c7e6c"
+                value={email}
+                onChangeText={setEmail}
+                placeholder="Enter your email"
+                autoCapitalize="none"
+                keyboardType="email-address"
+                className="rounded-2xl border px-4 py-3.5"
+                placeholderTextColor={authTheme.placeholder}
+                style={{
+                  borderColor: authTheme.inputBorder,
+                  backgroundColor: authTheme.inputBg,
+                  color: authTheme.inputText,
+                }}
               />
-              {error ? <Text className="text-sm text-[#c73831]">{error}</Text> : null}
+            </View>
+            <View>
+              <Text className="mb-2 text-base font-sans-medium" style={{ color: authTheme.label }}>
+                Verification code
+              </Text>
+              <View className="flex-row items-center gap-2">
+                <TextInput
+                  value={code}
+                  onChangeText={setCode}
+                  placeholder="Enter 6-digit code"
+                  keyboardType="number-pad"
+                  className="flex-1 rounded-2xl border px-4 py-3.5"
+                  placeholderTextColor={authTheme.placeholder}
+                  style={{
+                    borderColor: authTheme.inputBorder,
+                    backgroundColor: authTheme.inputBg,
+                    color: authTheme.inputText,
+                  }}
+                />
+                <Pressable
+                  onPress={pendingVerification ? onResendCode : onSignUp}
+                  disabled={loading || resendCountdown > 0 || email.trim().length === 0}
+                  className="rounded-2xl px-3 py-3"
+                  style={{
+                    backgroundColor: authTheme.primary,
+                    opacity:
+                      loading || resendCountdown > 0 || email.trim().length === 0
+                        ? 0.55
+                        : 1,
+                  }}
+                >
+                  <Text className="text-xs font-sans-semibold text-white">
+                    {resendCountdown > 0 ? `${resendCountdown}s` : "Send"}
+                  </Text>
+                </Pressable>
+              </View>
+            </View>
+            <View>
+              <Text className="mb-2 text-base font-sans-medium" style={{ color: authTheme.label }}>
+                Password
+              </Text>
+              <TextInput
+                value={password}
+                onChangeText={setPassword}
+                  placeholder="At least 6 characters"
+                secureTextEntry
+                className="rounded-2xl border px-4 py-3.5"
+                placeholderTextColor={authTheme.placeholder}
+                style={{
+                  borderColor: authTheme.inputBorder,
+                  backgroundColor: authTheme.inputBg,
+                  color: authTheme.inputText,
+                }}
+              />
+            </View>
+            {pendingVerification ? (
+              <Text className="text-sm" style={{ color: authTheme.body }}>
+                验证码已发送到 {email}，请输入后点击完成注册。
+              </Text>
+            ) : null}
+            {error ? (
+              <Text className="text-sm" style={{ color: authTheme.error }}>
+                {error}
+              </Text>
+            ) : null}
+            <Pressable
+              onPress={pendingVerification ? onVerify : onSignUp}
+              disabled={loading || (pendingVerification && code.trim().length === 0)}
+              className="items-center rounded-2xl px-4 py-3.5"
+              style={{
+                backgroundColor: authTheme.primary,
+                opacity: loading || (pendingVerification && code.trim().length === 0) ? 0.7 : 1,
+              }}
+            >
+              <Text className="font-sans-semibold text-white">
+                {loading
+                  ? pendingVerification
+                    ? "Verifying..."
+                    : "Sending code..."
+                  : pendingVerification
+                    ? "Complete sign up"
+                    : "Send verification code"}
+              </Text>
+            </Pressable>
+
+            <View className="my-1 flex-row items-center gap-3">
+              <View className="h-px flex-1" style={{ backgroundColor: authTheme.divider }} />
+              <Text className="text-xs" style={{ color: authTheme.dividerMuted }}>
+                or continue with
+              </Text>
+              <View className="h-px flex-1" style={{ backgroundColor: authTheme.divider }} />
+            </View>
+
+            <View className="flex-row gap-3">
               <Pressable
-                onPress={onVerify}
-                disabled={loading}
-                className={`items-center rounded-2xl px-4 py-3.5 ${loading ? "bg-[#16a34a]/70" : "bg-[#16a34a]"}`}
+                onPress={() => onOAuthSignUp("google")}
+                disabled={oauthLoading !== ""}
+                className="flex-1 flex-row items-center justify-center gap-2 rounded-2xl border px-4 py-3"
+                style={{
+                  borderColor: authTheme.inputBorder,
+                  backgroundColor: authTheme.inputBg,
+                }}
               >
-                <Text className="font-sans-semibold text-white">
-                  {loading ? "Verifying..." : "Complete sign up"}
+                <Ionicons name="logo-google" size={16} color={authTheme.icon} />
+                <Text className="font-sans-medium" style={{ color: authTheme.icon }}>
+                  {oauthLoading === "google" ? "Connecting..." : "Google"}
+                </Text>
+              </Pressable>
+              <Pressable
+                onPress={() => onOAuthSignUp("github")}
+                disabled={oauthLoading !== ""}
+                className="flex-1 flex-row items-center justify-center gap-2 rounded-2xl border px-4 py-3"
+                style={{
+                  borderColor: authTheme.inputBorder,
+                  backgroundColor: authTheme.inputBg,
+                }}
+              >
+                <Ionicons name="logo-github" size={16} color={authTheme.icon} />
+                <Text className="font-sans-medium" style={{ color: authTheme.icon }}>
+                  {oauthLoading === "github" ? "Connecting..." : "GitHub"}
                 </Text>
               </Pressable>
             </View>
-          )}
+          </View>
 
           <View className="mt-5 flex-row justify-center gap-1">
-            <Text className="text-sm text-[#4e6f5c]">Already have an account?</Text>
-            <Link href="/sign-in" className="text-sm font-sans-semibold text-[#15803d]">
+            <Text className="text-sm" style={{ color: authTheme.footer }}>
+              Already have an account?
+            </Text>
+            <Link href="/sign-in" className="text-sm font-sans-semibold" style={{ color: authTheme.link }}>
               Sign in
             </Link>
           </View>

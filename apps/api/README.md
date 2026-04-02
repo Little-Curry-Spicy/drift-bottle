@@ -1,98 +1,46 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Drift Bottle API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+`apps/api` 是漂流瓶后端服务，基于 NestJS + TypeORM + PostgreSQL。
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
+## 本地运行
 
 ```bash
-$ pnpm install
+pnpm --filter api start:dev
 ```
 
-## Compile and run the project
+默认端口 `3000`，Swagger 地址：`http://localhost:3000/docs`。
 
-```bash
-# development
-$ pnpm run start
+## 安全与稳定性
 
-# watch mode
-$ pnpm run start:dev
+- **限流**：默认 1 分钟内每个 IP 最多 60 次请求（`express-rate-limit`）
+- **安全头**：启用 `helmet`
+- **输入校验**：全局 `ValidationPipe`（白名单、自动转换、拒绝非法字段）
+- **CORS**：可通过环境变量配置允许域名
 
-# production mode
-$ pnpm run start:prod
-```
+## 日志（Winston）
 
-## Run tests
+已接入 `nest-winston + winston-daily-rotate-file`：
 
-```bash
-# unit tests
-$ pnpm run test
+- **按日期切分**：文件名包含 `YYYY-MM-DD`
+- **按大小切分**：单文件超过 `10KB` 自动分片（`%i`）
+- **错误日志单独文件**：`error` 级别独立输出
+- **超长日志分段**：单条 message 超过 `10KB` 时会被分段写入
 
-# e2e tests
-$ pnpm run test:e2e
+日志目录：`apps/api/logs`（运行时自动创建）。
 
-# test coverage
-$ pnpm run test:cov
-```
+## 关键环境变量
 
-## Deployment
+- `PORT`：服务端口，默认 `3000`
+- `CORS_ORIGIN`：逗号分隔的允许域名，如 `http://localhost:5173,http://localhost:8080`
+- `RATE_LIMIT_WINDOW_MS`：限流时间窗（毫秒），默认 `60000`
+- `RATE_LIMIT_MAX`：时间窗内最大请求数，默认 `60`
+- `LOG_LEVEL`：日志级别，默认 `info`
+- `LOG_MAX_FILES`：日志保留天数，例如 `14d`
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## 目录说明
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- `src/main.ts`：应用启动、安全策略、Swagger、全局中间件
+- `src/logger/winston.logger.ts`：Winston 传输器与分片策略
+- `src/bottles`：漂流瓶业务模块
+- `src/auth`：鉴权相关
+- `src/database`：数据库实体与配置

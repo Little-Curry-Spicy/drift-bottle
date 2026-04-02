@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Text, View } from "react-native";
+import { authTheme } from "@/src/theme/auth";
 import { tabItems } from "../constants";
 import type { Tab } from "../types";
 import { TouchableScale } from "./TouchableScale";
@@ -32,11 +33,9 @@ export function BottomTabs({ activeTab, onChange }: BottomTabsProps) {
               <Ionicons
                 name={iconByTab[item.key]}
                 size={18}
-                color={active ? "#166534" : "#4b6358"}
+                color={active ? authTheme.primary : authTheme.body}
               />
-              <Text
-                className={`mt-1 font-sans-medium text-xs ${active ? "text-foreground" : "text-muted-foreground"}`}
-              >
+              <Text className="mt-1 font-sans-medium text-xs" style={{ color: active ? authTheme.title : authTheme.body }}>
                 {item.label}
               </Text>
             </View>

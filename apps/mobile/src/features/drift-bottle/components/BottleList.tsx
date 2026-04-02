@@ -1,6 +1,7 @@
 import { Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Animated, { FadeInUp } from "react-native-reanimated";
+import { authTheme } from "@/src/theme/auth";
 import type { Bottle } from "../types";
 
 type BottleListProps = {
@@ -16,9 +17,11 @@ export function BottleList({ title, data, emptyText }: BottleListProps) {
         <Ionicons
           name={title === "Saved bottles" ? "heart-circle" : "albums"}
           size={18}
-          color="#15803d"
+          color={authTheme.primary}
         />
-        <Text className="text-lg font-sans-semibold text-foreground">{title}</Text>
+        <Text className="text-lg font-sans-semibold" style={{ color: authTheme.title }}>
+          {title}
+        </Text>
       </View>
       {data.length ? (
         data.map((item, index) => (

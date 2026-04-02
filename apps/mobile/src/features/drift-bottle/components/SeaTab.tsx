@@ -1,6 +1,7 @@
 import { Text, TextInput, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
+import { authTheme } from "@/src/theme/auth";
 import type { Bottle } from "../types";
 import { TouchableScale } from "./TouchableScale";
 
@@ -28,15 +29,18 @@ export function SeaTab({
         className="rounded-3xl border border-border/70 bg-card px-5 py-5"
       >
         <View className="flex-row items-center gap-2">
-          <Ionicons name="compass" size={18} color="#15803d" />
-          <Text className="text-lg font-sans-semibold text-foreground">Catch a bottle</Text>
+          <Ionicons name="compass" size={18} color={authTheme.primary} />
+          <Text className="text-lg font-sans-semibold" style={{ color: authTheme.title }}>
+            Catch a bottle
+          </Text>
         </View>
-        <Text className="mt-2 text-sm leading-6 text-muted-foreground">
+        <Text className="mt-2 text-sm leading-6" style={{ color: authTheme.body }}>
           Meet an anonymous story from someone out there.
         </Text>
         <TouchableScale
           onPress={onCatchBottle}
-          className="mt-5 items-center rounded-2xl bg-primary px-4 py-3.5"
+          className="mt-5 items-center rounded-2xl px-4 py-3.5"
+          style={{ backgroundColor: authTheme.primary }}
           pressedScale={0.97}
         >
           <View className="flex-row items-center gap-2">
@@ -64,13 +68,14 @@ export function SeaTab({
               value={replyDraft}
               onChangeText={onReplyDraftChange}
               placeholder="Write a reply..."
-              placeholderTextColor="rgba(15, 43, 29, 0.45)"
+              placeholderTextColor={authTheme.placeholder}
               className="rounded-2xl border border-border bg-background px-4 py-3.5 text-foreground"
             />
             <View className="flex-row gap-2">
               <TouchableScale
                 onPress={onSendReply}
-                className="flex-1 items-center rounded-2xl bg-primary px-4 py-3.5"
+                className="flex-1 items-center rounded-2xl px-4 py-3.5"
+                style={{ backgroundColor: authTheme.primary }}
                 pressedScale={0.97}
               >
                 <View className="flex-row items-center gap-1.5">
@@ -84,8 +89,10 @@ export function SeaTab({
                 pressedScale={0.97}
               >
                 <View className="flex-row items-center gap-1.5">
-                  <Ionicons name="heart" size={15} color="#15803d" />
-                  <Text className="font-sans-semibold text-foreground">Save</Text>
+                  <Ionicons name="heart" size={15} color={authTheme.primary} />
+                  <Text className="font-sans-semibold" style={{ color: authTheme.title }}>
+                    Save
+                  </Text>
                 </View>
               </TouchableScale>
             </View>

@@ -1,5 +1,6 @@
-import { ScrollView, Text, useWindowDimensions } from "react-native";
-import Animated, { FadeIn, FadeInDown, FadeInRight } from "react-native-reanimated";
+import { authTheme } from "@/src/theme/auth";
+import { ScrollView, Text, useWindowDimensions, View } from "react-native";
+import Animated, { FadeInDown, FadeInRight } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BottleList } from "../components/BottleList";
 import { BottomTabs } from "../components/BottomTabs";
@@ -14,25 +15,42 @@ export function DriftBottleScreen() {
   const isTablet = width >= 768;
   const isDesktop = width >= 1024;
   const horizontalPadding = isDesktop ? 32 : isTablet ? 24 : 16;
-  const contentMaxWidth = isDesktop ? 820 : isTablet ? 700 : 9999;
+  const activeTabLabel =
+    state.activeTab === "sea"
+      ? "Sea"
+      : state.activeTab === "throw"
+        ? "Drop"
+        : state.activeTab === "favorites"
+          ? "Saved"
+          : "Mine";
+
+  const activeTabHint =
+    state.activeTab === "sea"
+      ? "捞一个瓶子，看看此刻谁在海上说话。"
+      : state.activeTab === "throw"
+        ? "写下心情，把它轻轻扔进海里。"
+        : state.activeTab === "favorites"
+          ? "你收藏过的瓶子会保存在这里。"
+          : "查看你投递过的全部瓶子。";
 
   return (
-    <SafeAreaView edges={["left", "right", "bottom"]} className="flex-1 bg-background pt-2">
-      <Animated.View entering={FadeIn.duration(280)} style={{ paddingHorizontal: horizontalPadding }}>
-        <Animated.View className="rounded-3xl border border-border/70 bg-card/90 px-5 pb-4 pt-5">
-          <Text className="text-[30px] font-sans-bold text-foreground">Drift Bottle</Text>
-          <Text className="mt-1.5 text-base leading-6 text-muted-foreground">
-            Share a feeling anonymously and connect with someone who resonates.
+    <SafeAreaView
+      edges={["left", "right", "bottom"]}
+      className="flex-1 pt-2"
+      style={{ backgroundColor: authTheme.screenBg }}
+    >
+      <View className="px-4 pt-3" style={{ paddingHorizontal: horizontalPadding }}>
+          <Text className="text-2xl font-sans-semibold" style={{ color: authTheme.title }}>
+            {activeTabLabel}
           </Text>
-          <Text className="mt-3 text-xs text-muted-foreground/85">
-            Local MVP: drop, catch, reply, and save.
-          </Text>
-        </Animated.View>
-      </Animated.View>
+        <Text className="mt-2 text-sm leading-6" style={{ color: authTheme.body }}>
+          {activeTabHint}
+        </Text>
+      </View>
 
       <Animated.View
         entering={FadeInDown.duration(260)}
-        className="flex-row flex-wrap gap-3 pb-4 pt-5"
+        className="flex-row gap-3 pb-4 pt-4"
         style={{ paddingHorizontal: horizontalPadding }}
       >
         <StatCard label="Dropped" value={stats.thrown} />
@@ -44,10 +62,9 @@ export function DriftBottleScreen() {
         className="flex-1"
         contentContainerStyle={{
           paddingTop: 6,
-          paddingBottom: 108,
+          paddingBottom: 58,
           paddingHorizontal: horizontalPadding,
           width: "100%",
-          maxWidth: contentMaxWidth,
           alignSelf: "center",
         }}
       >
@@ -93,15 +110,15 @@ export function DriftBottleScreen() {
       {state.toast ? (
         <Animated.View
           entering={FadeInDown.duration(180)}
-          className="absolute inset-x-8 bottom-24 rounded-2xl bg-foreground px-4 py-3.5"
+          className="absolute inset-x-8 bottom-24 rounded-2xl px-4 py-3.5"
           style={{
             left: horizontalPadding,
             right: horizontalPadding,
-            maxWidth: contentMaxWidth,
             alignSelf: "center",
+            backgroundColor: authTheme.title,
           }}
         >
-          <Text className="text-center text-background/95">{state.toast}</Text>
+          <Text className="text-center text-white">{state.toast}</Text>
         </Animated.View>
       ) : null}
     </SafeAreaView>

@@ -57,13 +57,15 @@ export function CompassPicker({
     (x: number, y: number) => {
       const dx = x - radius;
       const dy = y - radius;
-      const next = (Math.atan2(dx, -dy) * 180) / Math.PI;
-      setNextAngle(next);
+      const dragAngle = (Math.atan2(dx, -dy) * 180) / Math.PI;
+      const launchAngle = dragAngle + 180;
+      setNextAngle(launchAngle);
       const dist = Math.sqrt(dx * dx + dy * dy);
       const normalizedPower = Math.min(dist / maxDragDist, 1);
       setPower(normalizedPower);
       dragPower.value = withTiming(normalizedPower, { duration: 60 });
       const clampRatio = dist > maxDragDist ? maxDragDist / dist : 1;
+      // Slingshot behavior: projectile follows drag position.
       const nextX = dx * clampRatio;
       const nextY = dy * clampRatio;
       dragX.value = withTiming(nextX, { duration: 60, easing: Easing.out(Easing.cubic) });
@@ -139,13 +141,11 @@ export function CompassPicker({
   const planeStyle = useAnimatedStyle(() => {
     const easedPower = 1 - Math.pow(1 - Math.min(dragPower.value, 1), 3);
     const planeScale = 1 + easedPower * 0.95;
-    // Keep the plane nose opposite to drag direction for slingshot feel.
-    const oppositeRotate = (pointerRotate.value + 180) % 360;
     return {
       transform: [
         { translateX: dragX.value },
         { translateY: dragY.value },
-        { rotate: `${oppositeRotate}deg` },
+        { rotate: `${pointerRotate.value}deg` },
         { scale: planeScale },
       ],
     };
