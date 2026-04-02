@@ -17,16 +17,25 @@ RUN pnpm --filter api build
 
 FROM node:20-slim AS runner
 
-WORKDIR /repo/apps/api
-
 RUN corepack enable
 ENV NODE_ENV=production
 
-# 运行时需要 node_modules（包含 Nest/依赖）
-COPY --from=builder /repo/node_modules /repo/node_modules
+WORKDIR /repo
 
-# dist 产物
-COPY --from=builder /repo/apps/api/dist ./dist
+# 只拷贝运行所需的清单文件与构建产物，避免把完整源码带进运行镜像。
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY apps/api/package.json ./apps/api/package.json
+
+# workspace 依赖：shared 当前 exports 指向 src，需要把源码带上
+COPY packages/shared/package.json ./packages/shared/package.json
+COPY packages/shared/src ./packages/shared/src
+
+COPY --from=builder /repo/apps/api/dist ./apps/api/dist
+
+# 在运行镜像中安装 api 的 production 依赖（避免跨 stage 复制 node_modules 带来的 pnpm 链接问题）
+RUN pnpm install --prod --frozen-lockfile --filter api...
+
+WORKDIR /repo/apps/api
 
 EXPOSE 3000
 
