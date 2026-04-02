@@ -1,11 +1,16 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import chalk from 'chalk';
+import type { Request, Response } from 'express';
 import { rateLimit } from 'express-rate-limit';
+import helmet from 'helmet';
 import { WinstonModule } from 'nest-winston';
 import { AppModule } from './app.module';
-import helmet from 'helmet';
+import {
+  AllExceptionsFilter,
+  TransformResponseInterceptor,
+} from './common';
 import { createWinstonTransports } from './logger/winston.logger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -16,10 +21,10 @@ async function bootstrap() {
   const logger = new Logger('Bootstrap');
 
   app.enableCors({
-    origin: process.env.CORS_ORIGIN?.split(',') ?? '*',
+    origin: '*',
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-User-Id'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   });
 
   app.use(
@@ -28,18 +33,18 @@ async function bootstrap() {
       max: Number(process.env.RATE_LIMIT_MAX ?? 60),
       standardHeaders: true,
       legacyHeaders: false,
-      message: {
-        statusCode: 429,
-        message: 'Too many requests, please try again later.',
+      handler: (_req: Request, res: Response) => {
+        res.status(429).json({
+          success: false,
+          code: 429,
+          message: 'Too many requests, please try again later.',
+          data: null,
+        });
       },
     }),
   );
 
-  app.use(
-    helmet({
-      crossOriginResourcePolicy: { policy: 'cross-origin' },
-    }),
-  );
+  app.use(helmet());
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -49,6 +54,11 @@ async function bootstrap() {
       forbidUnknownValues: true,
     }),
   );
+
+  app.useGlobalInterceptors(
+    new TransformResponseInterceptor(app.get(Reflector)),
+  );
+  app.useGlobalFilters(new AllExceptionsFilter());
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Drift Bottle API')

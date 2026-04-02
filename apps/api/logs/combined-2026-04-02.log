@@ -1,0 +1,544 @@
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T02:52:34.066Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T02:52:34.072Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T02:52:34.072Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T02:52:34.073Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T02:52:34.073Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T02:52:34.073Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T02:52:34.486Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T02:52:34.486Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T02:52:34.486Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T02:52:34.519Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T02:52:34.519Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T02:52:34.520Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T02:52:34.520Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T02:52:34.521Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T02:52:34.521Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T02:52:34.521Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T02:52:34.521Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T02:52:34.521Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T02:52:34.521Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T02:52:34.522Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T02:52:34.522Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T02:52:34.522Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T02:56:14.225Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T02:56:14.229Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T02:56:14.229Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T02:56:14.230Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T02:56:14.230Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T02:56:14.230Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T02:56:14.611Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T02:56:14.612Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T02:56:14.612Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T02:56:14.685Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T02:56:14.686Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T02:56:14.687Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T02:56:14.687Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T02:56:14.688Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T02:56:14.688Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T02:56:14.688Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T02:56:14.688Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T02:56:14.688Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T02:56:14.689Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T02:56:14.689Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T02:56:14.689Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T02:56:14.690Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T03:03:06.833Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T03:03:06.846Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T03:03:06.846Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T03:03:06.847Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:03:06.847Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:03:06.847Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T03:03:07.360Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T03:03:07.360Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T03:03:07.362Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T03:03:07.420Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T03:03:07.423Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T03:03:07.426Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T03:03:07.426Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T03:03:07.426Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T03:03:07.427Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T03:03:07.427Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T03:03:07.427Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T03:03:07.427Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T03:03:07.427Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T03:03:07.428Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T03:03:07.428Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T03:03:07.431Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T03:03:13.578Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T03:03:13.582Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T03:03:13.583Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T03:03:13.583Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:03:13.583Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:03:13.584Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T03:03:13.934Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T03:03:13.934Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T03:03:13.934Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T03:03:13.964Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T03:03:13.965Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T03:03:13.966Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T03:03:13.966Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T03:03:13.967Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T03:03:13.967Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T03:03:13.967Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T03:03:13.967Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T03:03:13.967Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T03:03:13.967Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T03:03:13.967Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T03:03:13.968Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T03:03:13.968Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T03:03:24.595Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T03:03:24.601Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T03:03:24.601Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T03:03:24.602Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:03:24.602Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:03:24.602Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T03:03:25.116Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T03:03:25.118Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T03:03:25.123Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T03:03:25.246Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T03:03:25.250Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T03:03:25.255Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T03:03:25.255Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T03:03:25.257Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T03:03:25.257Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T03:03:25.258Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T03:03:25.258Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T03:03:25.258Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T03:03:25.259Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T03:03:25.260Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T03:03:25.260Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T03:03:25.262Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T03:03:26.532Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T03:03:26.537Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T03:03:26.537Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T03:03:26.537Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:03:26.538Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:03:26.538Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T03:03:27.013Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T03:03:27.018Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T03:03:27.018Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T03:03:27.018Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:03:27.018Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:03:27.019Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T03:03:27.344Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T03:03:27.345Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T03:03:27.345Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T03:03:27.362Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T03:03:27.364Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T03:03:27.365Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T03:03:27.365Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T03:03:27.365Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T03:03:27.365Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T03:03:27.365Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T03:03:27.365Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T03:03:27.365Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T03:03:27.365Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T03:03:27.366Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T03:03:27.366Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T03:03:27.367Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T03:04:12.332Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T03:04:12.337Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T03:04:12.338Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T03:04:12.338Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:04:12.338Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:04:12.338Z"}
+{"context":"InstanceLoader","level":"info","message":"RealtimeModule dependencies initialized","timestamp":"2026-04-02T03:04:12.358Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T03:04:12.826Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T03:04:12.826Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T03:04:12.827Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T03:04:12.861Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T03:04:12.862Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T03:04:12.863Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T03:04:12.864Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T03:04:12.864Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T03:04:12.864Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T03:04:12.864Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T03:04:12.864Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T03:04:12.864Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T03:04:12.864Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T03:04:12.865Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T03:04:12.865Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T03:04:12.866Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T03:05:22.322Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T03:05:22.327Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T03:05:22.327Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T03:05:22.328Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:05:22.328Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:05:22.328Z"}
+{"context":"InstanceLoader","level":"info","message":"RealtimeModule dependencies initialized","timestamp":"2026-04-02T03:05:22.348Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T03:05:22.672Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T03:05:22.672Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T03:05:22.673Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T03:05:22.706Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T03:05:22.708Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T03:05:22.709Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T03:05:22.709Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T03:05:22.709Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T03:05:22.709Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T03:05:22.709Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T03:05:22.710Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T03:05:22.710Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T03:05:22.710Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T03:05:22.710Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T03:05:22.710Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T03:05:22.711Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T03:06:42.434Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T03:06:42.442Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T03:06:42.442Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T03:06:42.443Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:06:42.444Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:06:42.444Z"}
+{"context":"InstanceLoader","level":"info","message":"RealtimeModule dependencies initialized","timestamp":"2026-04-02T03:06:42.475Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T03:06:42.979Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T03:06:42.979Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T03:06:42.982Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T03:06:43.145Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T03:06:43.149Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T03:06:43.151Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T03:06:43.151Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T03:06:43.151Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T03:06:43.151Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T03:06:43.152Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T03:06:43.152Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T03:06:43.152Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T03:06:43.152Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T03:06:43.152Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T03:06:43.153Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T03:06:43.154Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T03:06:44.203Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T03:06:44.209Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T03:06:44.209Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T03:06:44.210Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:06:44.210Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:06:44.210Z"}
+{"context":"InstanceLoader","level":"info","message":"RealtimeModule dependencies initialized","timestamp":"2026-04-02T03:06:44.225Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T03:06:44.522Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T03:07:57.108Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T03:07:57.113Z"}
+{"context":"InstanceLoader","level":"info","message":"RealtimeModule dependencies initialized","timestamp":"2026-04-02T03:07:57.113Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T03:07:57.113Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T03:07:57.114Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:07:57.114Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T03:07:57.114Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T03:07:57.437Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T03:07:57.438Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T03:07:57.438Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T03:07:57.472Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T03:07:57.473Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T03:07:57.474Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T03:07:57.474Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T03:07:57.474Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T03:07:57.474Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T03:07:57.475Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T03:07:57.475Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T03:07:57.475Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/events, GET} route","timestamp":"2026-04-02T03:07:57.475Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T03:07:57.475Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T03:07:57.475Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T03:07:57.475Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T03:07:57.476Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T06:01:21.093Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T06:01:21.101Z"}
+{"context":"InstanceLoader","level":"info","message":"RealtimeModule dependencies initialized","timestamp":"2026-04-02T06:01:21.102Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T06:01:21.102Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T06:01:21.102Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T06:01:21.102Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T06:01:21.102Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T06:01:21.741Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T06:01:21.742Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T06:01:21.742Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T06:01:21.792Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T06:01:21.793Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T06:01:21.794Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T06:01:21.794Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T06:01:21.794Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T06:01:21.795Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T06:01:21.795Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T06:01:21.795Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T06:01:21.795Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/events, GET} route","timestamp":"2026-04-02T06:01:21.795Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T06:01:21.795Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T06:01:21.795Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T06:01:21.796Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T06:01:21.797Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T06:04:01.067Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T06:04:01.077Z"}
+{"context":"InstanceLoader","level":"info","message":"RealtimeModule dependencies initialized","timestamp":"2026-04-02T06:04:01.077Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T06:04:01.077Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T06:04:01.078Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T06:04:01.078Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T06:04:01.079Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T06:04:01.447Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T06:04:01.447Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T06:04:01.448Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T06:04:01.478Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T06:04:01.479Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T06:04:01.480Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T06:04:01.481Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T06:04:01.481Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T06:04:01.481Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T06:04:01.481Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T06:04:01.481Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T06:04:01.481Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/events, GET} route","timestamp":"2026-04-02T06:04:01.481Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T06:04:01.482Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T06:04:01.482Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T06:04:01.482Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T06:04:01.483Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T06:04:19.874Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T06:04:19.879Z"}
+{"context":"InstanceLoader","level":"info","message":"RealtimeModule dependencies initialized","timestamp":"2026-04-02T06:04:19.879Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T06:04:19.879Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T06:04:19.880Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T06:04:19.880Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T06:04:19.880Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T06:04:20.567Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T06:04:20.592Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T06:04:20.616Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T06:04:20.738Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T06:04:20.740Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T06:04:20.741Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T06:04:20.741Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T06:04:20.741Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T06:04:20.741Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T06:04:20.742Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T06:04:20.742Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T06:04:20.742Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/events, GET} route","timestamp":"2026-04-02T06:04:20.742Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T06:04:20.742Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T06:04:20.742Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T06:04:20.742Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T06:04:20.745Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T06:12:28.392Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T06:12:28.399Z"}
+{"context":"InstanceLoader","level":"info","message":"RealtimeModule dependencies initialized","timestamp":"2026-04-02T06:12:28.399Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T06:12:28.399Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T06:12:28.400Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T06:12:28.400Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T06:12:28.400Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T06:12:28.787Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T06:12:28.787Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T06:12:28.788Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T06:12:28.885Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T06:12:28.886Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T06:12:28.887Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T06:12:28.887Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T06:12:28.888Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T06:12:28.888Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T06:12:28.888Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T06:12:28.888Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T06:12:28.888Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/replied-by-me, GET} route","timestamp":"2026-04-02T06:12:28.888Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/events, GET} route","timestamp":"2026-04-02T06:12:28.889Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T06:12:28.889Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T06:12:28.889Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T06:12:28.889Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T06:12:28.890Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T06:26:56.253Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T06:26:56.271Z"}
+{"context":"InstanceLoader","level":"info","message":"RealtimeModule dependencies initialized","timestamp":"2026-04-02T06:26:56.271Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T06:26:56.272Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T06:26:56.273Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T06:26:56.274Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T06:26:56.274Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T06:26:56.647Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T06:26:56.647Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T06:26:56.648Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T06:26:56.732Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T06:26:56.735Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T06:26:56.737Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T06:26:56.737Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T06:26:56.738Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T06:26:56.738Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T06:26:56.738Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T06:26:56.739Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T06:26:56.739Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/replied-by-me, GET} route","timestamp":"2026-04-02T06:26:56.739Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/replies-to-me, GET} route","timestamp":"2026-04-02T06:26:56.739Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/events, GET} route","timestamp":"2026-04-02T06:26:56.740Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T06:26:56.740Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T06:26:56.743Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T06:26:56.744Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T06:26:56.747Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T06:36:36.404Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T06:36:36.409Z"}
+{"context":"InstanceLoader","level":"info","message":"RealtimeModule dependencies initialized","timestamp":"2026-04-02T06:36:36.409Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T06:36:36.409Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T06:36:36.409Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T06:36:36.409Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T06:36:36.410Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T06:36:36.807Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T06:36:36.808Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T06:36:36.809Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T06:36:36.896Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T06:36:36.897Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T06:36:36.898Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T06:36:36.898Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T06:36:36.899Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T06:36:36.899Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T06:36:36.899Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T06:36:36.899Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T06:36:36.899Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/replied-by-me, GET} route","timestamp":"2026-04-02T06:36:36.899Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/replies-to-me, GET} route","timestamp":"2026-04-02T06:36:36.899Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/events, GET} route","timestamp":"2026-04-02T06:36:36.899Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T06:36:36.900Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T06:36:36.900Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T06:36:36.900Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T06:36:36.901Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T06:56:40.713Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T06:56:40.718Z"}
+{"context":"InstanceLoader","level":"info","message":"RealtimeModule dependencies initialized","timestamp":"2026-04-02T06:56:40.718Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T06:56:40.719Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T06:56:40.720Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T06:56:40.721Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T06:56:40.721Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T06:56:41.105Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T06:56:41.106Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T06:56:41.107Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T06:56:41.136Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T06:56:41.137Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T06:56:41.138Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T06:56:41.138Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T06:56:41.139Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T06:56:41.139Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T06:56:41.139Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T06:56:41.139Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T06:56:41.139Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/replied-by-me, GET} route","timestamp":"2026-04-02T06:56:41.139Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/replies-to-me, GET} route","timestamp":"2026-04-02T06:56:41.139Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/events, GET} route","timestamp":"2026-04-02T06:56:41.139Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T06:56:41.140Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T06:56:41.140Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T06:56:41.140Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T06:56:41.141Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T06:56:44.600Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T06:56:44.608Z"}
+{"context":"InstanceLoader","level":"info","message":"RealtimeModule dependencies initialized","timestamp":"2026-04-02T06:56:44.608Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T06:56:44.608Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T06:56:44.609Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T06:56:44.610Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T06:56:44.610Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T06:56:44.957Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T06:56:44.958Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T06:56:44.958Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T06:56:44.982Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T06:56:44.984Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T06:56:44.985Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T06:56:44.985Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T06:56:44.986Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T06:56:44.986Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T06:56:44.986Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T06:56:44.986Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T06:56:44.986Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/replied-by-me, GET} route","timestamp":"2026-04-02T06:56:44.987Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/replies-to-me, GET} route","timestamp":"2026-04-02T06:56:44.987Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/events, GET} route","timestamp":"2026-04-02T06:56:44.987Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T06:56:44.987Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T06:56:44.988Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T06:56:44.988Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T06:56:44.989Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T07:21:10.040Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T07:21:10.045Z"}
+{"context":"InstanceLoader","level":"info","message":"RealtimeModule dependencies initialized","timestamp":"2026-04-02T07:21:10.045Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T07:21:10.045Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T07:21:10.046Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T07:21:10.046Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T07:21:10.046Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T07:21:10.414Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T07:21:10.414Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T07:21:10.415Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T07:21:10.473Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T07:21:10.475Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T07:21:10.476Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T07:21:10.477Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T07:21:10.477Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T07:21:10.477Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T07:21:10.478Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T07:21:10.478Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T07:21:10.478Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/replied-by-me, GET} route","timestamp":"2026-04-02T07:21:10.478Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/replies-to-me, GET} route","timestamp":"2026-04-02T07:21:10.478Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/events, GET} route","timestamp":"2026-04-02T07:21:10.478Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T07:21:10.479Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T07:21:10.479Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T07:21:10.479Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T07:21:10.482Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T07:22:37.799Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T07:22:37.804Z"}
+{"context":"InstanceLoader","level":"info","message":"RealtimeModule dependencies initialized","timestamp":"2026-04-02T07:22:37.804Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T07:22:37.805Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T07:22:37.806Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T07:22:37.806Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T07:22:37.807Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T07:22:38.125Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T07:22:38.126Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T07:22:38.126Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T07:22:38.153Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T07:22:38.154Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T07:22:38.156Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T07:22:38.156Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T07:22:38.156Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T07:22:38.156Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T07:22:38.156Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T07:22:38.156Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T07:22:38.157Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/replied-by-me, GET} route","timestamp":"2026-04-02T07:22:38.157Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/replies-to-me, GET} route","timestamp":"2026-04-02T07:22:38.157Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/events, GET} route","timestamp":"2026-04-02T07:22:38.157Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T07:22:38.157Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T07:22:38.157Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T07:22:38.157Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T07:22:38.158Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T07:25:42.412Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T07:25:42.418Z"}
+{"context":"InstanceLoader","level":"info","message":"RealtimeModule dependencies initialized","timestamp":"2026-04-02T07:25:42.418Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T07:25:42.418Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T07:25:42.419Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T07:25:42.419Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T07:25:42.419Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T07:25:42.767Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T07:25:42.767Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T07:25:42.768Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T07:25:42.800Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T07:25:42.801Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T07:25:42.802Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T07:25:42.802Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T07:25:42.803Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T07:25:42.803Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T07:25:42.804Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T07:25:42.804Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T07:25:42.805Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/replied-by-me, GET} route","timestamp":"2026-04-02T07:25:42.805Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/replies-to-me, GET} route","timestamp":"2026-04-02T07:25:42.806Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/events, GET} route","timestamp":"2026-04-02T07:25:42.806Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T07:25:42.807Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T07:25:42.807Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T07:25:42.808Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T07:25:42.810Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-04-02T07:26:01.017Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T07:26:01.023Z"}
+{"context":"InstanceLoader","level":"info","message":"RealtimeModule dependencies initialized","timestamp":"2026-04-02T07:26:01.023Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-04-02T07:26:01.023Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-04-02T07:26:01.025Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T07:26:01.025Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-04-02T07:26:01.025Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-04-02T07:26:01.330Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-04-02T07:26:01.330Z"}
+{"context":"InstanceLoader","level":"info","message":"BottlesModule dependencies initialized","timestamp":"2026-04-02T07:26:01.331Z"}
+{"context":"Bootstrap","level":"info","message":"\u001b[32mSwagger UI: \u001b[34mhttp://localhost:3000/docs\u001b[39m\u001b[32m\u001b[39m","timestamp":"2026-04-02T07:26:01.356Z"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:","timestamp":"2026-04-02T07:26:01.357Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route","timestamp":"2026-04-02T07:26:01.358Z"}
+{"context":"RoutesResolver","level":"info","message":"BottlesController {/bottles}:","timestamp":"2026-04-02T07:26:01.359Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles, POST} route","timestamp":"2026-04-02T07:26:01.359Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/catch, GET} route","timestamp":"2026-04-02T07:26:01.359Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/mine, GET} route","timestamp":"2026-04-02T07:26:01.359Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/favorites, GET} route","timestamp":"2026-04-02T07:26:01.359Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/stats, GET} route","timestamp":"2026-04-02T07:26:01.359Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/replied-by-me, GET} route","timestamp":"2026-04-02T07:26:01.359Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/replies-to-me, GET} route","timestamp":"2026-04-02T07:26:01.360Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/events, GET} route","timestamp":"2026-04-02T07:26:01.360Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/replies, POST} route","timestamp":"2026-04-02T07:26:01.360Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, POST} route","timestamp":"2026-04-02T07:26:01.360Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/bottles/:id/favorite, DELETE} route","timestamp":"2026-04-02T07:26:01.360Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-04-02T07:26:01.361Z"}

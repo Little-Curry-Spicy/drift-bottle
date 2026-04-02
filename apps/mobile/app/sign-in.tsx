@@ -65,7 +65,7 @@ export default function SignInPage() {
 
   return (
     <SafeAreaView className="flex-1 px-6" style={{ backgroundColor: authTheme.screenBg }}>
-      <View className="mx-auto w-full max-w-[520px] pt-10 flex-1 justify-center">
+      <View className="mx-auto w-full max-w-[520px] flex-1 mt-10">
         <View className="items-center">
           <View className="h-[150px] w-[150px] items-center justify-center overflow-hidden">
             <DotLottie

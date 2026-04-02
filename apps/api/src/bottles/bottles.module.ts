@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClerkAuthGuard } from '../auth/clerk-auth.guard';
-import { Bottle } from '../database/entities/bottle.entity';
-import { BottleFavorite } from '../database/entities/bottle-favorite.entity';
-import { BottleReply } from '../database/entities/bottle-reply.entity';
+import { Bottle, BottleFavorite, BottleReply } from '../database';
+import { RealtimeModule } from '../realtime/realtime.module';
 import { BottlesController } from './bottles.controller';
 import { BottlesService } from './bottles.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Bottle, BottleReply, BottleFavorite]),
+    RealtimeModule,
   ],
   controllers: [BottlesController],
   providers: [BottlesService, ClerkAuthGuard],
 })
-export class BottlesModule {}
+export class BottlesModule { }

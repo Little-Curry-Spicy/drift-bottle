@@ -18,9 +18,19 @@ export class ClerkAuthGuard implements CanActivate {
     const req = context.switchToHttp().getRequest<RequestWithUserId>();
     const secret = this.config.get<string>('CLERK_SECRET_KEY');
     const auth = req.headers.authorization;
+    const q = req.query?.token;
+    const tokenFromQuery =
+      typeof q === 'string'
+        ? q
+        : Array.isArray(q) && typeof q[0] === 'string'
+          ? q[0]
+          : undefined;
 
-    if (secret && auth?.startsWith('Bearer ')) {
-      const token = auth.slice(7);
+    const token: string | undefined = auth?.startsWith('Bearer ')
+      ? auth.slice(7)
+      : tokenFromQuery;
+
+    if (secret && token) {
       try {
         const payload = await verifyToken(token, { secretKey: secret });
         if (!payload.sub) {
@@ -33,17 +43,8 @@ export class ClerkAuthGuard implements CanActivate {
       }
     }
 
-    if (this.config.get<string>('AUTH_DEV_USER_HEADER') === 'true') {
-      const raw = req.headers['x-user-id'];
-      const id = Array.isArray(raw) ? raw[0] : raw;
-      if (typeof id === 'string' && id.length > 0) {
-        req.userId = id;
-        return true;
-      }
-    }
-
     throw new UnauthorizedException(
-      'Provide Authorization: Bearer <Clerk JWT>, or set AUTH_DEV_USER_HEADER=true and X-User-Id for local dev',
+      'Provide Authorization: Bearer <Clerk JWT> or ?token= (SSE / EventSource)',
     );
   }
 }

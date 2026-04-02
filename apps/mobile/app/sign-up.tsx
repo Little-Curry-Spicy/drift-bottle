@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { DotLottie } from "@lottiefiles/dotlottie-react-native";
 import { Link, Redirect } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -14,6 +14,11 @@ function getClerkErrorMessage(error: unknown, fallback: string) {
   const maybe = error as { errors?: Array<{ longMessage?: string; message?: string }> };
   const first = maybe?.errors?.[0];
   return first?.longMessage || first?.message || fallback;
+}
+
+function isVerificationAlreadyUsedError(error: unknown) {
+  const msg = getClerkErrorMessage(error, "").toLowerCase();
+  return msg.includes("already been verified") || msg.includes("already verified");
 }
 
 export default function SignUpPage() {
@@ -29,31 +34,49 @@ export default function SignUpPage() {
   const [loading, setLoading] = useState(false);
   const [oauthLoading, setOauthLoading] = useState<"" | "google" | "github">("");
   const [resendCountdown, setResendCountdown] = useState(0);
+  /** 防止连点「完成注册」：第一次校验成功后 Clerk 会消费验证码，再调 attempt 会报 already verified */
+  const verifyInFlightRef = useRef(false);
 
+  /** 只要 resendCountdown > 0 就每秒递减（不能依赖 pendingVerification：首次点击 Send 时先发 60 再 await，此时 pending 仍为 false，会导致 60s 卡住不动） */
   useEffect(() => {
-    if (!pendingVerification || resendCountdown <= 0) return;
+    if (resendCountdown <= 0) return;
     const timer = setTimeout(() => {
-      setResendCountdown((prev) => prev - 1);
+      setResendCountdown((prev) => (prev <= 0 ? 0 : prev - 1));
     }, 1000);
     return () => clearTimeout(timer);
-  }, [pendingVerification, resendCountdown]);
+  }, [resendCountdown]);
+
+  /** 邮箱已在服务端验证完成但本地未挂上 session 时，reload 后可拿到 complete + createdSessionId */
+  const tryFinishSignUpAfterReload = async (): Promise<boolean> => {
+    if (!signUp?.reload) return false;
+    try {
+      const updated = await signUp.reload();
+      if (updated.status === "complete" && updated.createdSessionId) {
+        await setActive?.({ session: updated.createdSessionId });
+        return true;
+      }
+    } catch {
+      /* ignore */
+    }
+    return false;
+  };
 
   if (!isLoaded) return null;
   if (isSignedIn) return <Redirect href="/bottles" />;
 
-  const onSignUp = async () => {
+  /** 发送邮箱验证码：先创建 signUp（邮箱+密码），再请求 Clerk 发 OTP */
+  const sendVerificationCode = async () => {
     if (!email.trim()) {
       setError("请先输入邮箱。");
       return;
     }
-    if (password.trim().length < 6) {
-      setError("密码至少 6 位。");
+    if (password.trim().length < 8) {
+      setError("请先填写密码（至少 8 位，与 Clerk 策略一致），再发送验证码。");
       return;
     }
     try {
       setLoading(true);
       setError("");
-      setResendCountdown(60);
       await signUp?.create({
         emailAddress: email.trim(),
         password,
@@ -62,15 +85,26 @@ export default function SignUpPage() {
         strategy: "email_code",
       });
       setPendingVerification(true);
+      setResendCountdown(60);
     } catch (error) {
       setResendCountdown(0);
-      setError(getClerkErrorMessage(error, "注册失败，请检查邮箱格式和密码强度。"));
+      setError(getClerkErrorMessage(error, "Sign up failed. Please check your email and password."));
     } finally {
       setLoading(false);
     }
   };
 
   const onVerify = async () => {
+    if (!pendingVerification) {
+      setError("请先点击 Send 发送验证码。");
+      return;
+    }
+    if (code.trim().length < 6) {
+      setError("请输入 6 位邮箱验证码。");
+      return;
+    }
+    if (verifyInFlightRef.current) return;
+    verifyInFlightRef.current = true;
     try {
       setLoading(true);
       setError("");
@@ -83,8 +117,12 @@ export default function SignUpPage() {
         setError("验证码验证未完成，请重试。");
       }
     } catch (error) {
-      setError(getClerkErrorMessage(error, "验证码无效或已过期。"));
+      if (isVerificationAlreadyUsedError(error) && (await tryFinishSignUpAfterReload())) {
+        return;
+      }
+      setError(getClerkErrorMessage(error, "Invalid or expired verification code."));
     } finally {
+      verifyInFlightRef.current = false;
       setLoading(false);
     }
   };
@@ -103,7 +141,7 @@ export default function SignUpPage() {
         setError("第三方登录未完成，请重试。");
       }
     } catch (error) {
-      setError(getClerkErrorMessage(error, "第三方登录失败，请稍后重试。"));
+      setError(getClerkErrorMessage(error, "OAuth sign-in failed. Please try again."));
     } finally {
       setOauthLoading("");
     }
@@ -113,22 +151,33 @@ export default function SignUpPage() {
     try {
       setLoading(true);
       setError("");
-      setResendCountdown(60);
+      // 邮箱已验证完成时不能再 prepare 新码，否则会报 already verified；应先尝试直接完成登录
+      if (await tryFinishSignUpAfterReload()) {
+        return;
+      }
       await signUp?.prepareEmailAddressVerification({
         strategy: "email_code",
       });
+      setResendCountdown(60);
     } catch (error) {
+      if (isVerificationAlreadyUsedError(error) && (await tryFinishSignUpAfterReload())) {
+        return;
+      }
       setResendCountdown(0);
-      setError(getClerkErrorMessage(error, "验证码发送失败，请稍后重试。"));
+      setError(getClerkErrorMessage(error, "Failed to send verification code. Please try again."));
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <SafeAreaView className="flex-1 px-6" style={{ backgroundColor: authTheme.screenBg }}>
-      <View className="mx-auto w-full max-w-[520px] flex-1 justify-center">
-        <View className="mx-auto w-[220px] items-center justify-center overflow-hidden">
+    <SafeAreaView
+      edges={["top", "left", "right", "bottom"]}
+      className="flex-1 px-6 pb-10"
+      style={{ backgroundColor: authTheme.screenBg }}
+    >
+      <View className="mx-auto mt-10 w-full max-w-[520px] flex-1 pb-8">
+        <View className="mx-auto mb-4 w-[220px] items-center justify-center overflow-hidden">
           <DotLottie
             source={require("../assets/lottie/bootstrap.lottie")}
             autoplay
@@ -138,16 +187,12 @@ export default function SignUpPage() {
         </View>
 
         <View
-          className="mx-4 mb-12 rounded-3xl border p-5"
+          className="mx-4 mb-6 rounded-3xl border p-5 pb-8"
           style={{ backgroundColor: authTheme.cardBg, borderColor: authTheme.cardBorder }}
         >
           <Text className="text-2xl font-sans-bold" style={{ color: authTheme.title }}>
             Create account
           </Text>
-          <Text className="mt-1 text-sm" style={{ color: authTheme.body }}>
-            填写邮箱、验证码与密码，在同一页完成注册。
-          </Text>
-
           <View className="mt-2 gap-4">
             <View>
               <Text className="mb-2 text-base font-sans-medium" style={{ color: authTheme.label }}>
@@ -159,6 +204,24 @@ export default function SignUpPage() {
                 placeholder="Enter your email"
                 autoCapitalize="none"
                 keyboardType="email-address"
+                className="rounded-2xl border px-4 py-3.5"
+                placeholderTextColor={authTheme.placeholder}
+                style={{
+                  borderColor: authTheme.inputBorder,
+                  backgroundColor: authTheme.inputBg,
+                  color: authTheme.inputText,
+                }}
+              />
+            </View>
+            <View>
+              <Text className="mb-2 text-base font-sans-medium" style={{ color: authTheme.label }}>
+                Password
+              </Text>
+              <TextInput
+                value={password}
+                onChangeText={setPassword}
+                placeholder="At least 8 characters"
+                secureTextEntry
                 className="rounded-2xl border px-4 py-3.5"
                 placeholderTextColor={authTheme.placeholder}
                 style={{
@@ -187,70 +250,70 @@ export default function SignUpPage() {
                   }}
                 />
                 <Pressable
-                  onPress={pendingVerification ? onResendCode : onSignUp}
-                  disabled={loading || resendCountdown > 0 || email.trim().length === 0}
+                  onPress={pendingVerification ? onResendCode : sendVerificationCode}
+                  disabled={
+                    loading ||
+                    resendCountdown > 0 ||
+                    email.trim().length === 0 ||
+                    (!pendingVerification && password.trim().length < 8)
+                  }
                   className="rounded-2xl px-3 py-3"
                   style={{
                     backgroundColor: authTheme.primary,
                     opacity:
-                      loading || resendCountdown > 0 || email.trim().length === 0
+                      loading ||
+                        resendCountdown > 0 ||
+                        email.trim().length === 0 ||
+                        (!pendingVerification && password.trim().length < 8)
                         ? 0.55
                         : 1,
                   }}
                 >
                   <Text className="text-xs font-sans-semibold text-white">
-                    {resendCountdown > 0 ? `${resendCountdown}s` : "Send"}
+                    {resendCountdown > 0 ? `${resendCountdown}s` : pendingVerification ? "Resend" : "Send"}
                   </Text>
                 </Pressable>
               </View>
             </View>
-            <View>
-              <Text className="mb-2 text-base font-sans-medium" style={{ color: authTheme.label }}>
-                Password
-              </Text>
-              <TextInput
-                value={password}
-                onChangeText={setPassword}
-                  placeholder="At least 6 characters"
-                secureTextEntry
-                className="rounded-2xl border px-4 py-3.5"
-                placeholderTextColor={authTheme.placeholder}
-                style={{
-                  borderColor: authTheme.inputBorder,
-                  backgroundColor: authTheme.inputBg,
-                  color: authTheme.inputText,
-                }}
-              />
-            </View>
             {pendingVerification ? (
               <Text className="text-sm" style={{ color: authTheme.body }}>
-                验证码已发送到 {email}，请输入后点击完成注册。
+                验证码已发送到 {email}，输入后点击下方「完成注册」。
               </Text>
-            ) : null}
+            ) : (
+              <Text className="text-sm" style={{ color: authTheme.body }}>
+                填写邮箱与密码后，点击验证码右侧 Send 发送验证码。
+              </Text>
+            )}
             {error ? (
               <Text className="text-sm" style={{ color: authTheme.error }}>
                 {error}
               </Text>
             ) : null}
             <Pressable
-              onPress={pendingVerification ? onVerify : onSignUp}
-              disabled={loading || (pendingVerification && code.trim().length === 0)}
+              onPress={onVerify}
+              disabled={
+                loading ||
+                !pendingVerification ||
+                code.trim().length < 6
+              }
               className="items-center rounded-2xl px-4 py-3.5"
               style={{
                 backgroundColor: authTheme.primary,
-                opacity: loading || (pendingVerification && code.trim().length === 0) ? 0.7 : 1,
+                opacity:
+                  loading || !pendingVerification || code.trim().length < 6 ? 0.55 : 1,
               }}
             >
               <Text className="font-sans-semibold text-white">
-                {loading
-                  ? pendingVerification
-                    ? "Verifying..."
-                    : "Sending code..."
-                  : pendingVerification
-                    ? "Complete sign up"
-                    : "Send verification code"}
+                {loading && pendingVerification ? "Verifying..." : "完成注册"}
               </Text>
             </Pressable>
+            <Text className="text-center text-xs" style={{ color: authTheme.dividerMuted }}>
+              {!pendingVerification
+                ? "发送验证码后可填写验证码并点击完成注册"
+                : code.trim().length < 6
+                  ? "请输入 6 位验证码"
+                  : "点击完成注册以创建账号"}
+            </Text>
 
             <View className="my-1 flex-row items-center gap-3">
               <View className="h-px flex-1" style={{ backgroundColor: authTheme.divider }} />

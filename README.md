@@ -79,6 +79,12 @@ pnpm mobile
 
 首次请在 `apps/mobile` 下配置环境变量（见下文 Clerk）。
 
+**Metro 报 `Unable to resolve module axios`**：根目录 `.npmrc` 使用 `node-linker=hoisted` 时，依赖会集中在仓库根 `node_modules`，`apps/mobile/node_modules` 里可能看不到 `axios`。`apps/mobile/metro.config.js` 已把根 `node_modules` 纳入解析并映射 `axios`；若仍报错，在仓库根执行 `pnpm install` 后，用 `pnpm mobile -- -c`（或 `expo start -c`）清缓存重启 Metro。
+
+**接口 429 / 控制台疯狂打 `/bottles/*`**：多为 `useDriftBottleMvp` 里把 Clerk 的 `getToken` 放进 `useMemo` 依赖，引用每帧变化导致 `refreshAll` 与挂载时的 `useEffect` 形成死循环。实现上已通过 `useRef` 持有最新 `getToken`，并保持 `createDriftBottleApi` 只创建一次。
+
+**接口 401，提示 `Provide Authorization: Bearer <Clerk JWT>`**：（1）在 **`apps/api/.env`** 配置与 Clerk 控制台一致的 **`CLERK_SECRET_KEY`**，且请求携带可校验的 `Authorization: Bearer <JWT>`。（2）移动端请求里 `Authorization` 须在合并 headers 时最后写入，避免被覆盖；并在 `userId` 就绪后再拉数据，且对 `getToken` 做 `skipCache` 与短延迟重试，避免登录后首帧无 JWT。
+
 ## 运行后端 API
 
 ```bash
@@ -93,24 +99,33 @@ pnpm api:build
 
 构建产物位于 `apps/api/dist`。
 
-启动后 **Swagger UI**：<http://localhost:3000/docs>（OpenAPI 文档与调试入口；端口以 `PORT` 环境变量为准）。需在 Swagger 中点击 **Authorize** 填入 Clerk 的 `Bearer <token>`，或在本地设 `AUTH_DEV_USER_HEADER=true` 后传 `X-User-Id`。
+启动后 **Swagger UI**：<http://localhost:3000/docs>（OpenAPI 文档与调试入口；端口以 `PORT` 环境变量为准）。需在 Swagger 中点击 **Authorize** 填入 Clerk 的 `Bearer <token>`。
+
+### 统一响应结构（`TransformResponseInterceptor` + `AllExceptionsFilter`）
+
+- **成功（2xx）**：`{ "success": true, "code": 0, "message": "OK", "data": <控制器返回的 JSON，无内容时为 null> }`  
+  业务数据在 **`data`**（例如 `GET /bottles/catch` 的 `data` 为 `{ bottle: ... }`）。
+- **失败（4xx/5xx）**：`{ "success": false, "code": <HTTP 状态码>, "message": "<说明>", "data": null }`
+- **限流 429**：与失败结构相同（`express-rate-limit` 自定义 `handler`）。
+
+实现位置：`apps/api/src/common/interceptors/transform-response.interceptor.ts`、`apps/api/src/common/filters/all-exceptions.filter.ts`；移动端在 `apps/mobile/src/features/drift-bottle/api.ts` 的 `parseEnvelope` 中自动拆包。Swagger 文档里的 `responses` 仍描述 **`data` 内部的形状**，实际响应多一层外壳。
 
 ### 漂流瓶 API（与移动端结构对齐）
 
 | 方法 | 路径 | 说明 |
 |------|------|------|
 | `POST` | `/bottles` | 扔瓶：`{ content, mood }` |
-| `GET` | `/bottles/catch` | 随机捞他人瓶子；无可捞时 `404` |
+| `GET` | `/bottles/catch` | 随机捞他人瓶子；**始终 HTTP 200**；`data` 为 `{ bottle: Bottle \| null }` |
 | `GET` | `/bottles/mine` | 我的瓶子 |
 | `GET` | `/bottles/favorites` | 收藏列表 |
 | `GET` | `/bottles/stats` | `thrown` / `favorite` / `replied`（回复数为**我发出的**条数） |
 | `POST` | `/bottles/:id/replies` | 回复：`{ content }` |
-| `POST` | `/bottles/:id/favorite` | 收藏 |
-| `DELETE` | `/bottles/:id/favorite` | 取消收藏 |
+| `POST` | `/bottles/:id/favorite` | 收藏；**HTTP 200**，`data` 为 `null` |
+| `DELETE` | `/bottles/:id/favorite` | 取消收藏；**HTTP 200**，`data` 为 `null` |
 
 响应中 `Bottle` 字段：`id`, `content`, `mood`, `author`（`me` \| `stranger`）, `replies`（正文数组）, `createdAt`（ISO 字符串）。
 
-若使用 **Clerk**，请在 `apps/api/.env` 配置 `CLERK_SECRET_KEY`；用户 id 为字符串，需已在 Supabase 执行 `supabase/migrations/20260402130000_clerk_user_ids.sql`（将 `author_id` / `user_id` 改为 `varchar` 并去掉对 `auth.users` 的外键）。
+若使用 **Clerk**，请在 `apps/api/.env` 配置 `CLERK_SECRET_KEY`；用户 id 为字符串（如 `user_xxx`），数据库列不能仍是 `uuid`。请在**已配置 `DATABASE_URL` 的前提下**在仓库根执行 `pnpm --filter api migrate:clerk-user-ids`（或在 `apps/api` 下执行 `pnpm migrate:clerk-user-ids`），等价于应用 `supabase/migrations/20260402130000_clerk_user_ids.sql`：改为 `varchar(128)`、去掉对 `auth.users` 的外键，并删除依赖 `author_id` / `user_id` 的旧 RLS 策略（否则 Postgres 会报 `cannot alter type of a column used in a policy definition`）。若未跑该迁移，接口会出现 `invalid input syntax for type uuid: "user_..."`。
 
 ## 共享包 `@drift-bottle/shared`
 

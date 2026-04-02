@@ -1,0 +1,1 @@
+{"context":"PackageLoader","level":"error","message":"No driver (WebSockets) has been selected. In order to take advantage of the default driver, please, ensure to install the \"@nestjs/platform-socket.io\" package ($ npm install @nestjs/platform-socket.io).","stack":[null],"timestamp":"2026-04-02T03:06:44.546Z"}

@@ -1,91 +1,114 @@
-import type { Bottle } from "./types";
+import ky, { type KyInstance } from "ky";
 
-export type DriftStats = {
-  thrown: number;
-  favorite: number;
-  replied: number;
-};
+import type { GetAccessToken } from "./api-types";
 
-type GetHeaders = () => Promise<Record<string, string>>;
+export type { DriftStats, GetAccessToken } from "./api-types";
+
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL!.replace(/\/$/, "");
 
 export class ApiError extends Error {
-  status: number;
-  constructor(status: number, message: string) {
+  readonly status: number;
+  readonly code: number;
+
+  constructor(message: string, status: number, code = 0) {
     super(message);
+    this.name = "ApiError";
     this.status = status;
+    this.code = code;
   }
 }
 
-const API_BASE_URL = (process.env.EXPO_PUBLIC_API_URL ?? "http://localhost:3000").replace(/\/$/, "");
+/** 与 apps/api 全局拦截器 / 异常过滤器一致 */
+type ApiEnvelope<T> = {
+  success: boolean;
+  code: number;
+  message: string;
+  data: T | null;
+};
 
-async function request<T>(
-  path: string,
-  init: RequestInit | undefined,
-  getHeaders: GetHeaders,
-): Promise<T> {
-  const headers = await getHeaders();
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    ...init,
-    headers: {
-      "Content-Type": "application/json",
-      ...headers,
-      ...(init?.headers ?? {}),
+type AuthedRequestConfig = {
+  method: "GET" | "POST" | "DELETE";
+  url: string;
+  data?: unknown;
+};
+
+function parseEnvelope<T>(status: number, raw: unknown): T {
+  if (typeof raw !== "object" || raw === null) {
+    if (status >= 400) {
+      throw new ApiError(`Request failed: ${status}`, status);
+    }
+    throw new ApiError("Invalid response", status);
+  }
+
+  const body = raw as ApiEnvelope<T>;
+  const bizCode = typeof body.code === "number" ? body.code : 0;
+
+  if (status >= 400 || body.success === false) {
+    const message =
+      typeof body.message === "string" && body.message.length > 0
+        ? body.message
+        : errorMessageFromBody(raw) || `Request failed: ${status}`;
+    throw new ApiError(message, status, bizCode);
+  }
+
+  if (body.success !== true || body.code !== 0) {
+    throw new ApiError(body.message, status, bizCode);
+  }
+
+  return (body.data === null ? undefined : body.data) as T;
+}
+
+function errorMessageFromBody(data: unknown): string {
+  if (data == null) return "";
+  if (typeof data === "string") return data;
+  if (typeof data === "object" && data !== null && "message" in data) {
+    const m = (data as { message: unknown }).message;
+    if (typeof m === "string") return m;
+    if (Array.isArray(m)) return m.join(", ");
+  }
+  try {
+    return JSON.stringify(data);
+  } catch {
+    return "Request failed";
+  }
+}
+
+async function readResponseJson(response: Response): Promise<unknown> {
+  const text = await response.text();
+  if (!text.trim()) return null;
+  try {
+    return JSON.parse(text) as unknown;
+  } catch {
+    return null;
+  }
+}
+
+/** 固定请求头：`Authorization: Bearer <token>`（无 token 时不带头）；基于 fetch，适合 RN / Web */
+export function createAuthedRequest(getAccessToken: GetAccessToken) {
+  const client: KyInstance = ky.create({
+    prefixUrl: API_BASE_URL,
+    headers: { "Content-Type": "application/json" },
+    throwHttpErrors: false,
+    hooks: {
+      beforeRequest: [
+        async (request) => {
+          const token = await getAccessToken();
+          if (token) request.headers.set("Authorization", `Bearer ${token}`);
+        },
+      ],
     },
   });
 
-  if (!response.ok) {
-    const text = await response.text();
-    const message = text || `Request failed: ${response.status}`;
-    throw new ApiError(response.status, message);
-  }
+  return async function request<T>(config: AuthedRequestConfig): Promise<T> {
+    const path = config.url.replace(/^\//, "");
+    const response = await client(path, {
+      method: config.method,
+      ...(config.data !== undefined ? { json: config.data } : {}),
+    });
 
-  if (response.status === 204) {
-    return undefined as T;
-  }
-
-  return (await response.json()) as T;
+    const raw = await readResponseJson(response);
+    return parseEnvelope<T>(response.status, raw);
+  };
 }
 
-export const driftBottleApi = {
-  listMine(getHeaders: GetHeaders) {
-    return request<Bottle[]>("/bottles/mine", { method: "GET" }, getHeaders);
-  },
-  listFavorites(getHeaders: GetHeaders) {
-    return request<Bottle[]>("/bottles/favorites", { method: "GET" }, getHeaders);
-  },
-  getStats(getHeaders: GetHeaders) {
-    return request<DriftStats>("/bottles/stats", { method: "GET" }, getHeaders);
-  },
-  createBottle(content: string, mood: Bottle["mood"], getHeaders: GetHeaders) {
-    return request<Bottle>(
-      "/bottles",
-      {
-        method: "POST",
-        body: JSON.stringify({ content, mood }),
-      },
-      getHeaders,
-    );
-  },
-  catchRandom(getHeaders: GetHeaders) {
-    return request<Bottle>("/bottles/catch", { method: "GET" }, getHeaders);
-  },
-  addReply(bottleId: string, content: string, getHeaders: GetHeaders) {
-    return request<Bottle>(
-      `/bottles/${bottleId}/replies`,
-      {
-        method: "POST",
-        body: JSON.stringify({ content }),
-      },
-      getHeaders,
-    );
-  },
-  addFavorite(bottleId: string, getHeaders: GetHeaders) {
-    return request<void>(
-      `/bottles/${bottleId}/favorite`,
-      {
-        method: "POST",
-      },
-      getHeaders,
-    );
-  },
-};
+export { createDriftBottleApi } from "./drift-bottle-api";

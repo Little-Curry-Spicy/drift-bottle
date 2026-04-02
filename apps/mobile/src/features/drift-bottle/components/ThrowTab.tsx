@@ -12,13 +12,10 @@ import Animated, {
 } from "react-native-reanimated";
 import { useEffect } from "react";
 import { authTheme } from "@/src/theme/auth";
-import type { Mood } from "../types";
 
 type ThrowTabProps = {
   draft: string;
-  selectedMood: Mood;
   onDraftChange: (value: string) => void;
-  onMoodChange: (mood: Mood) => void;
   onThrow: () => void;
 };
 

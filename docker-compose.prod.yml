@@ -1,0 +1,17 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+    # Nest ConfigModule 会从工作目录读取 apps/api/.env
+    volumes:
+      - ./apps/api/.env:/repo/apps/api/.env:ro
+      - api-logs:/repo/apps/api/logs
+
+volumes:
+  api-logs:
+

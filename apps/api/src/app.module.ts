@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BottlesModule } from './bottles/bottles.module';
-import { Bottle, BottleFavorite, BottleReply } from './database/entities';
+import { Bottle, BottleFavorite, BottleReply } from './database';
 @Module({
   imports: [
     ConfigModule.forRoot({

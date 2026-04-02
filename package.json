@@ -11,11 +11,13 @@
     "web:preview": "pnpm --filter web start",
     "api": "pnpm --filter api start:dev",
     "api:build": "pnpm --filter api build",
+    "api:migrate:clerk-user-ids": "pnpm --filter api migrate:clerk-user-ids",
     "lint": "pnpm -r --if-present lint"
   },
   "pnpm": {
     "overrides": {
-      "pretty-format": "29.7.0"
+      "pretty-format": "29.7.0",
+      "mime-types": "2.1.35"
     }
   }
 }

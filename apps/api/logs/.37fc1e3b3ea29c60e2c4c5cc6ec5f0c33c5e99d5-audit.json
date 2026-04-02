@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 30
+    },
+    "auditLog": "/Users/tangshuokun/study/drift-bottle/apps/api/logs/.37fc1e3b3ea29c60e2c4c5cc6ec5f0c33c5e99d5-audit.json",
+    "files": [
+        {
+            "date": 1775098353992,
+            "name": "/Users/tangshuokun/study/drift-bottle/apps/api/logs/error-2026-04-02.log",
+            "hash": "70232cec6d858a230d5434f85fc4743e75831f9feb4817f663694ea4c041a2e7"
+        }
+    ],
+    "hashType": "sha256"
+}

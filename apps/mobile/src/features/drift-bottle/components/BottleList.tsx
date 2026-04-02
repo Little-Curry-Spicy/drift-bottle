@@ -2,6 +2,7 @@ import { Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Animated, { FadeInUp } from "react-native-reanimated";
 import { authTheme } from "@/src/theme/auth";
+import { formatBottleTime } from "../datetime";
 import type { Bottle } from "../types";
 
 type BottleListProps = {
@@ -30,12 +31,9 @@ export function BottleList({ title, data, emptyText }: BottleListProps) {
             entering={FadeInUp.delay(index * 40).duration(220)}
             className="rounded-3xl border border-border/70 bg-card px-5 py-5"
           >
-            <View className="mb-3 flex-row items-center justify-between">
-              <Text className="text-xs text-muted-foreground">{item.createdAt}</Text>
-              <Text className="rounded-full bg-muted px-2.5 py-1 text-xs text-foreground">
-                {item.mood}
-              </Text>
-            </View>
+            <Text className="mb-3 text-xs text-muted-foreground">
+              {formatBottleTime(item.createdAt)}
+            </Text>
             <Text className="leading-7 text-foreground">{item.content}</Text>
             <Text className="mt-3 text-xs text-muted-foreground">
               {item.replies.length} replies
