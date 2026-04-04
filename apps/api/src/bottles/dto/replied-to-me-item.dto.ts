@@ -23,10 +23,16 @@ export class RepliedToMeItemDto {
   @ApiProperty()
   bottleCreatedAt: string;
 
-  @ApiProperty({ type: [IncomingReplyLineDto], description: '他人回复，时间升序' })
+  @ApiProperty({
+    type: [IncomingReplyLineDto],
+    description: '他人回复，时间升序',
+  })
   incomingReplies: IncomingReplyLineDto[];
 
-  @ApiProperty({ type: [String], description: '我在该瓶子下发出的回复（时间升序）' })
+  @ApiProperty({
+    type: [String],
+    description: '我在该瓶子下发出的回复（时间升序）',
+  })
   myReplyContents: string[];
 
   @ApiProperty({ description: '最后一条他人回复时间 ISO' })

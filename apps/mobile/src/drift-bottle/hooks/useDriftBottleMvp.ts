@@ -1,7 +1,13 @@
 import { useAuth } from "@clerk/clerk-expo";
 import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
-import { ApiError, type DriftStats, createDriftBottleApi } from "../api";
-import { consumeSseJsonLines, getDriftBottleSseUrl } from "../bottle-realtime";
+import { useTranslation } from "react-i18next";
+import {
+  ApiError,
+  type DriftStats,
+  consumeSseJsonLines,
+  createDriftBottleApi,
+  getDriftBottleSseUrl,
+} from "../api";
 import {
   bottleFromPayload,
   type Bottle,
@@ -123,6 +129,7 @@ function reducer(state: State, action: Action): State {
 }
 
 export function useDriftBottleMvp() {
+  const { t } = useTranslation();
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
   // Clerk 的 getToken 引用可能在每次渲染变化；若放进 useMemo 依赖会导致 api → refreshAll → useEffect 死循环请求。
   const getTokenRef = useRef(getToken);
@@ -165,10 +172,10 @@ export function useDriftBottleMvp() {
       dispatch({ type: "SET_REPLIED_TO_ME", payload: repliedToMe });
     } catch (e) {
       const msg =
-        e instanceof ApiError ? e.message : "Could not load data. Check API URL and network.";
+        e instanceof ApiError ? e.message : t("drift.toast.loadFailed");
       showToast(msg);
     }
-  }, [api, showToast]);
+  }, [api, showToast, t]);
 
   /** 仅刷新统计与收藏列表（避免每次收藏都打整套接口） */
   const refreshStatsAndFavorites = useCallback(async () => {
@@ -178,10 +185,10 @@ export function useDriftBottleMvp() {
       dispatch({ type: "SET_FAVORITES", payload: favs.map(bottleFromPayload) });
     } catch (e) {
       const msg =
-        e instanceof ApiError ? e.message : "Could not load favorites. Check API URL and network.";
+        e instanceof ApiError ? e.message : t("drift.toast.loadFavoritesFailed");
       showToast(msg);
     }
-  }, [api, showToast]);
+  }, [api, showToast, t]);
 
   /** 仅刷新统计与“我回复过的海友”列表 */
   const refreshStatsAndRepliedOut = useCallback(async () => {
@@ -191,10 +198,10 @@ export function useDriftBottleMvp() {
       dispatch({ type: "SET_REPLIED_OUT", payload: repliedOut });
     } catch (e) {
       const msg =
-        e instanceof ApiError ? e.message : "Could not load replies. Check API URL and network.";
+        e instanceof ApiError ? e.message : t("drift.toast.loadRepliesFailed");
       showToast(msg);
     }
-  }, [api, showToast]);
+  }, [api, showToast, t]);
 
   /** 仅刷新“回复我的”弹层所需数据 */
   const refreshRepliedToMe = useCallback(async () => {
@@ -203,10 +210,10 @@ export function useDriftBottleMvp() {
       dispatch({ type: "SET_REPLIED_TO_ME", payload: repliedToMe });
     } catch (e) {
       const msg =
-        e instanceof ApiError ? e.message : "Could not load received replies. Check API URL and network.";
+        e instanceof ApiError ? e.message : t("drift.toast.loadReceivedFailed");
       showToast(msg);
     }
-  }, [api, showToast]);
+  }, [api, showToast, t]);
 
   /** 仅同步顶部统计 +「我的瓶子」；投递成功后收藏列表不会变，不必再打 favorites */
   const refreshStatsAndMine = useCallback(async () => {
@@ -219,10 +226,10 @@ export function useDriftBottleMvp() {
       });
     } catch (e) {
       const msg =
-        e instanceof ApiError ? e.message : "Could not load data. Check API URL and network.";
+        e instanceof ApiError ? e.message : t("drift.toast.loadFailed");
       showToast(msg);
     }
-  }, [api, showToast]);
+  }, [api, showToast, t]);
 
   useEffect(() => {
     if (!isLoaded || !isSignedIn || !userId) return;
@@ -310,7 +317,7 @@ export function useDriftBottleMvp() {
   const throwBottle = useCallback(async () => {
     const content = state.draft.trim();
     if (!content) {
-      showToast("Write something before you drop a bottle.");
+      showToast(t("drift.toast.writeBeforeDrop"));
       return;
     }
     try {
@@ -318,12 +325,12 @@ export function useDriftBottleMvp() {
       dispatch({ type: "SET_DRAFT", payload: "" });
       dispatch({ type: "SET_TAB", payload: "mine" });
       await refreshStatsAndMine();
-      showToast("Bottle dropped into the sea.");
+      showToast(t("drift.toast.dropped"));
     } catch (e) {
-      const msg = e instanceof ApiError ? e.message : "Could not drop bottle.";
+      const msg = e instanceof ApiError ? e.message : t("drift.toast.dropFailed");
       showToast(msg);
     }
-  }, [api, refreshStatsAndMine, showToast, state.draft]);
+  }, [api, refreshStatsAndMine, showToast, state.draft, t]);
 
   const catchRandomBottle = useCallback(async () => {
     dispatch({ type: "SET_CATCH_BUSY", payload: true });
@@ -334,15 +341,15 @@ export function useDriftBottleMvp() {
         payload: bottle ? bottleFromPayload(bottle) : null,
       });
       if (!bottle) {
-        showToast("No new bottles in the sea right now.");
+        showToast(t("drift.toast.noBottles"));
       }
     } catch (e) {
-      const msg = e instanceof ApiError ? e.message : "Could not catch a bottle.";
+      const msg = e instanceof ApiError ? e.message : t("drift.toast.catchFailed");
       showToast(msg);
     } finally {
       dispatch({ type: "SET_CATCH_BUSY", payload: false });
     }
-  }, [api, showToast]);
+  }, [api, showToast, t]);
 
   const toggleFavorite = useCallback(
     async (bottle: Bottle) => {
@@ -350,28 +357,28 @@ export function useDriftBottleMvp() {
       try {
         if (isSaved) {
           await api.removeFavorite(bottle.id);
-          showToast("已从收藏中移除。");
+          showToast(t("drift.toast.removedFavorite"));
         } else {
           await api.addFavorite(bottle.id);
-          showToast("已加入收藏。");
+          showToast(t("drift.toast.addedFavorite"));
         }
         await refreshStatsAndFavorites();
       } catch (e) {
         if (e instanceof ApiError && e.status === 409 && !isSaved) {
-          showToast("已在收藏中。");
+          showToast(t("drift.toast.alreadyFavorite"));
           await refreshStatsAndFavorites();
           return;
         }
         if (e instanceof ApiError && e.status === 404 && isSaved) {
-          showToast("收藏已失效，列表已刷新。");
+          showToast(t("drift.toast.favoriteStale"));
           await refreshStatsAndFavorites();
           return;
         }
-        const msg = e instanceof ApiError ? e.message : "操作失败，请重试。";
+        const msg = e instanceof ApiError ? e.message : t("drift.toast.actionFailed");
         showToast(msg);
       }
     },
-    [api, refreshStatsAndFavorites, showToast, state.favorites],
+    [api, refreshStatsAndFavorites, showToast, state.favorites, t],
   );
 
   type ReplyMode = "repliedOut" | "repliedToMe";
@@ -384,13 +391,14 @@ export function useDriftBottleMvp() {
       try {
         const trimmed = content.trim();
         if (!trimmed) {
-          showToast("Reply cannot be empty.");
+          showToast(t("drift.toast.replyEmpty"));
           return;
         }
 
         if (mode === "repliedOut") {
-          const updated = await api.addReply(bottleId, trimmed);
-          dispatch({ type: "PICK_BOTTLE", payload: bottleFromPayload(updated) });
+          await api.addReply(bottleId, trimmed);
+          // 海洋里回复成功后立即收起瓶子卡片，避免仍占满一屏
+          dispatch({ type: "PICK_BOTTLE", payload: null });
           await refreshStatsAndRepliedOut();
         } else {
           await api.addReply(bottleId, trimmed);
@@ -398,9 +406,9 @@ export function useDriftBottleMvp() {
           await refreshRepliedToMe();
         }
 
-        showToast("Reply sent.");
+        showToast(t("drift.toast.replySent"));
       } catch (e) {
-        const msg = e instanceof ApiError ? e.message : "Could not send reply.";
+        const msg = e instanceof ApiError ? e.message : t("drift.toast.replyFailed");
         showToast(msg);
       } finally {
         replyInFlightRef.current = false;
@@ -411,6 +419,7 @@ export function useDriftBottleMvp() {
       refreshStatsAndRepliedOut,
       refreshRepliedToMe,
       showToast,
+      t,
     ],
   );
 

@@ -56,7 +56,8 @@ export class BottlesController {
 
   @Get('catch')
   @ApiOperation({
-    summary: '随机捞一条他人瓶子（与前端 Sea / catch）；无可用瓶子时 HTTP 200 且 bottle 为 null',
+    summary:
+      '随机捞一条他人瓶子（与前端 Sea / catch）；无可用瓶子时 HTTP 200 且 bottle 为 null',
   })
   @ApiResponse({ status: 200, type: CatchBottleResponseDto })
   async catchRandom(
@@ -76,9 +77,7 @@ export class BottlesController {
   @Get('favorites')
   @ApiOperation({ summary: '收藏列表' })
   @ApiResponse({ status: 200, type: [BottleResponseDto] })
-  listFavorites(
-    @CurrentUserId() userId: string,
-  ): Promise<BottleResponseDto[]> {
+  listFavorites(@CurrentUserId() userId: string): Promise<BottleResponseDto[]> {
     return this.bottlesService.listFavorites(userId);
   }
 
@@ -99,7 +98,9 @@ export class BottlesController {
   }
 
   @Get('replies-to-me')
-  @ApiOperation({ summary: '他人回复了我的瓶子（含回复者代号、每条回复与时间）' })
+  @ApiOperation({
+    summary: '他人回复了我的瓶子（含回复者代号、每条回复与时间）',
+  })
   @ApiResponse({ status: 200, type: [RepliedToMeItemDto] })
   listRepliesToMyBottles(
     @CurrentUserId() userId: string,

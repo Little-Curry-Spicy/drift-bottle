@@ -14,4 +14,4 @@ import { BottlesService } from './bottles.service';
   controllers: [BottlesController],
   providers: [BottlesService, ClerkAuthGuard],
 })
-export class BottlesModule { }
+export class BottlesModule {}

@@ -18,7 +18,7 @@ export function createWinstonTransports() {
         }),
       ),
     }),
-    
+
     new DailyRotateFile({
       level: process.env.LOG_LEVEL ?? 'info',
       dirname: logsDir,

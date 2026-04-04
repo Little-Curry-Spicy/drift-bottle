@@ -14,7 +14,10 @@ export class RepliedOutItemDto {
   @ApiProperty({ description: '瓶主匿名代号（如 海友 · xxxx）' })
   bottleAuthorMask: string;
 
-  @ApiProperty({ type: [String], description: '我在该瓶下发出的回复（时间升序）' })
+  @ApiProperty({
+    type: [String],
+    description: '我在该瓶下发出的回复（时间升序）',
+  })
   myReplyContents: string[];
 
   @ApiProperty({ description: '我最后一次在该瓶下回复的时间 ISO' })

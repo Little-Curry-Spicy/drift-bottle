@@ -1,13 +1,23 @@
+import {
+  getLiveEmailIssue,
+  getLivePasswordIssue,
+  getLiveUsernameIssue,
+  getSignUpCredentialIssueCode,
+  signUpCredentialsSchema,
+  type SignUpCredentialIssueCode,
+} from "@/src/auth/sign-up-credentials";
 import { authTheme } from "@/src/theme/auth";
 import { useAuth, useSSO, useSignUp } from "@clerk/clerk-expo";
 import { Ionicons } from "@expo/vector-icons";
 import { DotLottie } from "@lottiefiles/dotlottie-react-native";
 import { Link, Redirect } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+// 这行代码的作用是：处理 Web 端 OAuth 登录的回调，完成 pending 的 Auth Session。
 WebBrowser.maybeCompleteAuthSession();
 
 function getClerkErrorMessage(error: unknown, fallback: string) {
@@ -22,12 +32,15 @@ function isVerificationAlreadyUsedError(error: unknown) {
 }
 
 export default function SignUpPage() {
+  const { t } = useTranslation();
   const { isLoaded, isSignedIn } = useAuth();
   const { signUp, setActive } = useSignUp();
   const { startSSOFlow } = useSSO();
 
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [code, setCode] = useState("");
   const [pendingVerification, setPendingVerification] = useState(false);
   const [error, setError] = useState("");
@@ -45,6 +58,35 @@ export default function SignUpPage() {
     }, 1000);
     return () => clearTimeout(timer);
   }, [resendCountdown]);
+
+  const credentialsValid = useMemo(
+    () => signUpCredentialsSchema.safeParse({ email, password, username }).success,
+    [email, password, username],
+  );
+
+  const liveEmailIssue = useMemo(() => getLiveEmailIssue(email), [email]);
+  const liveUsernameIssue = useMemo(() => getLiveUsernameIssue(username), [username]);
+  const livePasswordIssue = useMemo(() => getLivePasswordIssue(password), [password]);
+
+  const liveIssueMessage = (code: SignUpCredentialIssueCode | undefined) => {
+    if (!code) return null;
+    switch (code) {
+      case "invalid_email":
+        return t("auth.signUp.errorEmailInvalid");
+      case "short_password":
+        return t("auth.signUp.livePasswordShort", { count: password.length });
+      case "empty_username":
+        return t("auth.signUp.errorUsernameEmpty");
+      case "short_username":
+        return t("auth.signUp.errorUsernameShort");
+      case "long_username":
+        return t("auth.signUp.errorUsernameLong");
+      case "invalid_username":
+        return t("auth.signUp.errorUsernameInvalid");
+      default:
+        return null;
+    }
+  };
 
   /** 邮箱已在服务端验证完成但本地未挂上 session 时，reload 后可拿到 complete + createdSessionId */
   const tryFinishSignUpAfterReload = async (): Promise<boolean> => {
@@ -66,21 +108,28 @@ export default function SignUpPage() {
 
   /** 发送邮箱验证码：先创建 signUp（邮箱+密码），再请求 Clerk 发 OTP */
   const sendVerificationCode = async () => {
-    if (!email.trim()) {
-      setError("请先输入邮箱。");
+    const parsed = signUpCredentialsSchema.safeParse({ email, password, username });
+    if (!parsed.success) {
+      const code = getSignUpCredentialIssueCode(parsed.error);
+      if (code === "empty_email") setError(t("auth.signUp.errorEnterEmail"));
+      else if (code === "invalid_email") setError(t("auth.signUp.errorEmailInvalid"));
+      else if (code === "empty_username") setError(t("auth.signUp.errorUsernameEmpty"));
+      else if (code === "short_username") setError(t("auth.signUp.errorUsernameShort"));
+      else if (code === "long_username") setError(t("auth.signUp.errorUsernameLong"));
+      else if (code === "invalid_username") setError(t("auth.signUp.errorUsernameInvalid"));
+      else setError(t("auth.signUp.errorPasswordShort"));
       return;
     }
-    if (password.trim().length < 8) {
-      setError("请先填写密码（至少 8 位，与 Clerk 策略一致），再发送验证码。");
-      return;
-    }
+    const { email: emailAddr, password: pwd, username: user } = parsed.data;
     try {
       setLoading(true);
       setError("");
       await signUp?.create({
-        emailAddress: email.trim(),
-        password,
+        emailAddress: emailAddr,
+        password: pwd,
+        username: user,
       });
+      // 发送邮箱验证码
       await signUp?.prepareEmailAddressVerification({
         strategy: "email_code",
       });
@@ -88,7 +137,7 @@ export default function SignUpPage() {
       setResendCountdown(60);
     } catch (error) {
       setResendCountdown(0);
-      setError(getClerkErrorMessage(error, "Sign up failed. Please check your email and password."));
+      setError(getClerkErrorMessage(error, t("auth.signUp.fallbackSignUpFailed")));
     } finally {
       setLoading(false);
     }
@@ -96,11 +145,11 @@ export default function SignUpPage() {
 
   const onVerify = async () => {
     if (!pendingVerification) {
-      setError("请先点击 Send 发送验证码。");
+      setError(t("auth.signUp.errorSendFirst"));
       return;
     }
     if (code.trim().length < 6) {
-      setError("请输入 6 位邮箱验证码。");
+      setError(t("auth.signUp.errorCodeLength"));
       return;
     }
     if (verifyInFlightRef.current) return;
@@ -108,19 +157,53 @@ export default function SignUpPage() {
     try {
       setLoading(true);
       setError("");
+      // 验证邮箱验证码
       const verifyResult = await signUp?.attemptEmailAddressVerification({
         code: code.trim(),
       });
-      if (verifyResult?.status === "complete") {
+      if (verifyResult?.status === "complete" && verifyResult.createdSessionId) {
         await setActive?.({ session: verifyResult.createdSessionId });
-      } else {
-        setError("验证码验证未完成，请重试。");
+        return;
       }
+      if (verifyResult?.status === "missing_requirements") {
+        const u = username.trim();
+        if (!u) {
+          setError(t("auth.signUp.errorUsernameRequired"));
+          return;
+        }
+        const updated = await signUp?.update({ username: u });
+        if (updated?.status === "complete" && updated.createdSessionId) {
+          await setActive?.({ session: updated.createdSessionId });
+          return;
+        }
+        setError(t("auth.signUp.errorVerifyIncomplete"));
+        return;
+      }
+      setError(t("auth.signUp.errorVerifyIncomplete"));
     } catch (error) {
       if (isVerificationAlreadyUsedError(error) && (await tryFinishSignUpAfterReload())) {
         return;
       }
-      setError(getClerkErrorMessage(error, "Invalid or expired verification code."));
+      if (isVerificationAlreadyUsedError(error)) {
+        const u = username.trim();
+        if (!u) {
+          setError(t("auth.signUp.errorUsernameRequired"));
+          return;
+        }
+        try {
+          const updated = await signUp?.update({ username: u });
+          if (updated?.status === "complete" && updated.createdSessionId) {
+            await setActive?.({ session: updated.createdSessionId });
+            return;
+          }
+        } catch (updateErr) {
+          setError(getClerkErrorMessage(updateErr, t("auth.signUp.fallbackSignUpFailed")));
+          return;
+        }
+        setError(t("auth.signUp.errorVerifyIncomplete"));
+        return;
+      }
+      setError(getClerkErrorMessage(error, t("auth.signUp.fallbackInvalidCode")));
     } finally {
       verifyInFlightRef.current = false;
       setLoading(false);
@@ -138,10 +221,10 @@ export default function SignUpPage() {
       if (result.createdSessionId) {
         await (result.setActive ?? setActive)?.({ session: result.createdSessionId });
       } else {
-        setError("第三方登录未完成，请重试。");
+        setError(t("auth.signUp.errorOAuthIncomplete"));
       }
     } catch (error) {
-      setError(getClerkErrorMessage(error, "OAuth sign-in failed. Please try again."));
+      setError(getClerkErrorMessage(error, t("auth.signUp.fallbackOAuthFailed")));
     } finally {
       setOauthLoading("");
     }
@@ -164,7 +247,7 @@ export default function SignUpPage() {
         return;
       }
       setResendCountdown(0);
-      setError(getClerkErrorMessage(error, "Failed to send verification code. Please try again."));
+      setError(getClerkErrorMessage(error, t("auth.signUp.fallbackResendFailed")));
     } finally {
       setLoading(false);
     }
@@ -191,55 +274,120 @@ export default function SignUpPage() {
           style={{ backgroundColor: authTheme.cardBg, borderColor: authTheme.cardBorder }}
         >
           <Text className="text-2xl font-sans-bold" style={{ color: authTheme.title }}>
-            Create account
+            {t("auth.signUp.title")}
           </Text>
           <View className="mt-2 gap-4">
             <View>
               <Text className="mb-2 text-base font-sans-medium" style={{ color: authTheme.label }}>
-                Email
+                {t("auth.signUp.email")}
               </Text>
               <TextInput
                 value={email}
-                onChangeText={setEmail}
-                placeholder="Enter your email"
+                onChangeText={(v) => {
+                  setEmail(v);
+                  setError("");
+                }}
+                placeholder={t("auth.signUp.emailPlaceholder")}
                 autoCapitalize="none"
                 keyboardType="email-address"
                 className="rounded-2xl border px-4 py-3.5"
                 placeholderTextColor={authTheme.placeholder}
+                accessibilityHint={liveIssueMessage(liveEmailIssue) ?? undefined}
                 style={{
-                  borderColor: authTheme.inputBorder,
+                  borderColor: liveEmailIssue ? authTheme.error : authTheme.inputBorder,
                   backgroundColor: authTheme.inputBg,
                   color: authTheme.inputText,
                 }}
               />
+              {liveEmailIssue ? (
+                <Text className="mt-1.5 text-xs" style={{ color: authTheme.error }}>
+                  {liveIssueMessage(liveEmailIssue)}
+                </Text>
+              ) : null}
             </View>
             <View>
               <Text className="mb-2 text-base font-sans-medium" style={{ color: authTheme.label }}>
-                Password
+                {t("auth.signUp.username")}
               </Text>
               <TextInput
-                value={password}
-                onChangeText={setPassword}
-                placeholder="At least 8 characters"
-                secureTextEntry
+                value={username}
+                onChangeText={(v) => {
+                  setUsername(v);
+                  setError("");
+                }}
+                placeholder={t("auth.signUp.usernamePlaceholder")}
+                autoCapitalize="none"
+                autoCorrect={false}
                 className="rounded-2xl border px-4 py-3.5"
                 placeholderTextColor={authTheme.placeholder}
+                accessibilityHint={liveIssueMessage(liveUsernameIssue) ?? undefined}
                 style={{
-                  borderColor: authTheme.inputBorder,
+                  borderColor: liveUsernameIssue ? authTheme.error : authTheme.inputBorder,
                   backgroundColor: authTheme.inputBg,
                   color: authTheme.inputText,
                 }}
               />
+              {liveUsernameIssue ? (
+                <Text className="mt-1.5 text-xs" style={{ color: authTheme.error }}>
+                  {liveIssueMessage(liveUsernameIssue)}
+                </Text>
+              ) : null}
             </View>
             <View>
               <Text className="mb-2 text-base font-sans-medium" style={{ color: authTheme.label }}>
-                Verification code
+                {t("auth.signUp.password")}
+              </Text>
+              <View
+                className="flex-row items-center rounded-2xl border pr-1"
+                style={{
+                  borderColor: livePasswordIssue ? authTheme.error : authTheme.inputBorder,
+                  backgroundColor: authTheme.inputBg,
+                }}
+              >
+                <TextInput
+                  value={password}
+                  onChangeText={(v) => {
+                    setPassword(v);
+                    setError("");
+                  }}
+                  placeholder={t("auth.signUp.passwordPlaceholder")}
+                  secureTextEntry={!passwordVisible}
+                  className="min-w-0 flex-1 px-4 py-3.5"
+                  placeholderTextColor={authTheme.placeholder}
+                  accessibilityHint={liveIssueMessage(livePasswordIssue) ?? undefined}
+                  style={{ color: authTheme.inputText }}
+                />
+                <Pressable
+                  onPress={() => setPasswordVisible((v) => !v)}
+                  hitSlop={12}
+                  accessibilityRole="button"
+                  accessibilityLabel={
+                    passwordVisible ? t("auth.a11y.passwordHide") : t("auth.a11y.passwordShow")
+                  }
+                  className="p-2.5"
+                >
+                  <Ionicons
+                    name={passwordVisible ? "eye-off-outline" : "eye-outline"}
+                    size={22}
+                    color={authTheme.icon}
+                  />
+                </Pressable>
+              </View>
+              {livePasswordIssue ? (
+                <Text className="mt-1.5 text-xs" style={{ color: authTheme.error }}>
+                  {liveIssueMessage(livePasswordIssue)}
+                </Text>
+              ) : null}
+            </View>
+            <View>
+              <Text className="mb-2 text-base font-sans-medium" style={{ color: authTheme.label }}>
+                {t("auth.signUp.verificationCode")}
               </Text>
               <View className="flex-row items-center gap-2">
                 <TextInput
                   value={code}
                   onChangeText={setCode}
-                  placeholder="Enter 6-digit code"
+                  placeholder={t("auth.signUp.codePlaceholder")}
                   keyboardType="number-pad"
                   className="flex-1 rounded-2xl border px-4 py-3.5"
                   placeholderTextColor={authTheme.placeholder}
@@ -254,8 +402,7 @@ export default function SignUpPage() {
                   disabled={
                     loading ||
                     resendCountdown > 0 ||
-                    email.trim().length === 0 ||
-                    (!pendingVerification && password.trim().length < 8)
+                    (!pendingVerification && !credentialsValid)
                   }
                   className="rounded-2xl px-3 py-3"
                   style={{
@@ -263,27 +410,21 @@ export default function SignUpPage() {
                     opacity:
                       loading ||
                         resendCountdown > 0 ||
-                        email.trim().length === 0 ||
-                        (!pendingVerification && password.trim().length < 8)
+                        (!pendingVerification && !credentialsValid)
                         ? 0.55
                         : 1,
                   }}
                 >
                   <Text className="text-xs font-sans-semibold text-white">
-                    {resendCountdown > 0 ? `${resendCountdown}s` : pendingVerification ? "Resend" : "Send"}
+                    {resendCountdown > 0
+                      ? `${resendCountdown}s`
+                      : pendingVerification
+                        ? t("auth.signUp.resend")
+                        : t("auth.signUp.send")}
                   </Text>
                 </Pressable>
               </View>
             </View>
-            {pendingVerification ? (
-              <Text className="text-sm" style={{ color: authTheme.body }}>
-                验证码已发送到 {email}，输入后点击下方「完成注册」。
-              </Text>
-            ) : (
-              <Text className="text-sm" style={{ color: authTheme.body }}>
-                填写邮箱与密码后，点击验证码右侧 Send 发送验证码。
-              </Text>
-            )}
             {error ? (
               <Text className="text-sm" style={{ color: authTheme.error }}>
                 {error}
@@ -304,21 +445,14 @@ export default function SignUpPage() {
               }}
             >
               <Text className="font-sans-semibold text-white">
-                {loading && pendingVerification ? "Verifying..." : "完成注册"}
+                {loading && pendingVerification ? t("auth.signUp.verifying") : t("auth.signUp.finish")}
               </Text>
             </Pressable>
-            <Text className="text-center text-xs" style={{ color: authTheme.dividerMuted }}>
-              {!pendingVerification
-                ? "发送验证码后可填写验证码并点击完成注册"
-                : code.trim().length < 6
-                  ? "请输入 6 位验证码"
-                  : "点击完成注册以创建账号"}
-            </Text>
 
             <View className="my-1 flex-row items-center gap-3">
               <View className="h-px flex-1" style={{ backgroundColor: authTheme.divider }} />
               <Text className="text-xs" style={{ color: authTheme.dividerMuted }}>
-                or continue with
+                {t("auth.signUp.orContinue")}
               </Text>
               <View className="h-px flex-1" style={{ backgroundColor: authTheme.divider }} />
             </View>
@@ -335,7 +469,7 @@ export default function SignUpPage() {
               >
                 <Ionicons name="logo-google" size={16} color={authTheme.icon} />
                 <Text className="font-sans-medium" style={{ color: authTheme.icon }}>
-                  {oauthLoading === "google" ? "Connecting..." : "Google"}
+                  {oauthLoading === "google" ? t("auth.signUp.connecting") : t("auth.signUp.google")}
                 </Text>
               </Pressable>
               <Pressable
@@ -349,7 +483,7 @@ export default function SignUpPage() {
               >
                 <Ionicons name="logo-github" size={16} color={authTheme.icon} />
                 <Text className="font-sans-medium" style={{ color: authTheme.icon }}>
-                  {oauthLoading === "github" ? "Connecting..." : "GitHub"}
+                  {oauthLoading === "github" ? t("auth.signUp.connecting") : t("auth.signUp.github")}
                 </Text>
               </Pressable>
             </View>
@@ -357,10 +491,10 @@ export default function SignUpPage() {
 
           <View className="mt-5 flex-row justify-center gap-1">
             <Text className="text-sm" style={{ color: authTheme.footer }}>
-              Already have an account?
+              {t("auth.signUp.alreadyHave")}
             </Text>
             <Link href="/sign-in" className="text-sm font-sans-semibold" style={{ color: authTheme.link }}>
-              Sign in
+              {t("auth.signUp.signInLink")}
             </Link>
           </View>
         </View>

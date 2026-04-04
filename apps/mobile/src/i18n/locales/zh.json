@@ -1,0 +1,183 @@
+{
+  "layout": {
+    "clerkKeyMissing": "请先在环境变量中配置 EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY"
+  },
+  "auth": {
+    "a11y": {
+      "passwordShow": "显示密码",
+      "passwordHide": "隐藏密码"
+    },
+    "signIn": {
+      "title": "欢迎回来",
+      "username": "用户名",
+      "password": "密码",
+      "usernamePlaceholder": "请输入用户名",
+      "passwordPlaceholder": "请输入密码",
+      "signInCta": "登录",
+      "signingIn": "登录中…",
+      "orContinue": "或使用以下方式继续",
+      "connecting": "连接中…",
+      "google": "Google",
+      "github": "GitHub",
+      "newToApp": "第一次使用{{name}}？",
+      "createAccount": "创建账号",
+      "errorIncomplete": "登录未完成，请重试。",
+      "errorBadCreds": "用户名或密码错误，请检查后重试。",
+      "errorOAuthIncomplete": "第三方登录未完成，请重试。",
+      "errorOAuthFailed": "第三方登录失败，请稍后重试。",
+      "appName": "漂流瓶"
+    },
+    "signUp": {
+      "title": "创建账号",
+      "email": "邮箱",
+      "username": "用户名",
+      "password": "密码",
+      "verificationCode": "验证码",
+      "emailPlaceholder": "请输入邮箱",
+      "usernamePlaceholder": "3～64 位，字母数字与 _ . -",
+      "passwordPlaceholder": "至少 8 位字符",
+      "codePlaceholder": "请输入 6 位验证码",
+      "send": "发送",
+      "resend": "重发",
+      "finish": "完成注册",
+      "verifying": "验证中…",
+      "orContinue": "或使用以下方式继续",
+      "connecting": "连接中…",
+      "google": "Google",
+      "github": "GitHub",
+      "alreadyHave": "已有账号？",
+      "signInLink": "去登录",
+      "errorEnterEmail": "请先输入邮箱。",
+      "errorEmailInvalid": "请输入有效的邮箱地址。",
+      "errorPasswordShort": "请先填写密码（至少 8 位，与 Clerk 策略一致），再发送验证码。",
+      "livePasswordShort": "密码至少 8 位（已输入 {{count}} 位）",
+      "errorUsernameEmpty": "请先填写用户名。",
+      "errorUsernameShort": "用户名至少 3 个字符。",
+      "errorUsernameLong": "用户名过长（最多 64 个字符）。",
+      "errorUsernameInvalid": "用户名仅可使用字母、数字、下划线、英文句点与连字符。",
+      "errorUsernameRequired": "你的 Clerk 实例要求用户名：请填写后再次点击完成注册。",
+      "errorSendFirst": "请先点击发送验证码。",
+      "errorCodeLength": "请输入 6 位邮箱验证码。",
+      "errorVerifyIncomplete": "验证码验证未完成，请重试。",
+      "errorOAuthIncomplete": "第三方登录未完成，请重试。",
+      "fallbackSignUpFailed": "注册失败，请检查邮箱与密码。",
+      "fallbackInvalidCode": "验证码无效或已过期。",
+      "fallbackOAuthFailed": "第三方登录失败，请重试。",
+      "fallbackResendFailed": "发送验证码失败，请重试。"
+    }
+  },
+  "drift": {
+    "tabs": {
+      "sea": "海洋",
+      "throw": "扔瓶",
+      "favorites": "收藏",
+      "mine": "我的"
+    },
+    "tabHints": {
+      "sea": "捞一个瓶子，看看此刻谁在海上说话。",
+      "throw": "写下心情，把它轻轻扔进海里。",
+      "favorites": "你收藏过的瓶子会保存在这里。",
+      "mine": "查看你投递过的全部瓶子。"
+    },
+    "stats": {
+      "dropped": "已扔",
+      "saved": "收藏",
+      "repliesToMe": "回复我的",
+      "repliesByMe": "我回复的",
+      "tapToView": "点击查看",
+      "a11yButton": "{{label}}，当前 {{value}}，点击查看详情"
+    },
+    "list": {
+      "savedTitle": "收藏的瓶子",
+      "mineTitle": "我的瓶子",
+      "savedEmpty": "还没有收藏的瓶子。",
+      "mineEmpty": "你还没有扔过瓶子。",
+      "replies_one": "{{count}} 条回复",
+      "replies_other": "{{count}} 条回复"
+    },
+    "sea": {
+      "title": "捞一个瓶子",
+      "subtitle": "遇见来自远方的匿名故事。",
+      "catchNow": "立即捞瓶",
+      "catching": "捞瓶中…",
+      "replyPlaceholder": "写一句回复…",
+      "sendReply": "发送回复",
+      "save": "收藏",
+      "saved": "已收藏",
+      "emptyCatch": "捞到的瓶子会显示在这里。",
+      "a11ySendReply": "发送回复",
+      "a11yRemoveSaved": "取消收藏",
+      "a11ySaveBottle": "收藏瓶子"
+    },
+    "throw": {
+      "title": "扔漂流瓶",
+      "subtitle": "写下此刻的心情，匿名投进海里。",
+      "placeholder": "此刻想分享些什么？",
+      "cta": "发送漂流瓶",
+      "previewTitle": "海面预览",
+      "previewHint": "玻璃瓶会跟随海浪轻微上下浮动与倾斜。"
+    },
+    "profile": {
+      "defaultName": "用户",
+      "avatarLabel": "头像",
+      "signOut": "退出登录",
+      "signingOut": "正在退出…",
+      "signOutA11y": "退出登录",
+      "language": "界面语言",
+      "langEn": "English",
+      "langZh": "中文"
+    },
+    "repliedToMe": {
+      "title": "他人回复我的",
+      "subtitle": "下列为你投放的瓶子收到的他人留言；代号用于区分不同海友。",
+      "close": "关闭",
+      "empty": "还没有人回复你的瓶子。先去扔一只进海里吧。",
+      "myBottle": "我的瓶子",
+      "latest": "最新",
+      "theirReply": "他人回复",
+      "replyThisLine": "回复这句",
+      "replyThisLineA11y": "回复这句话",
+      "mySentReplies": "我发出的回复",
+      "notRepliedYet": "你还没有回复过这只瓶子。",
+      "quote": "引用",
+      "quoteOnly": "（仅引用）",
+      "addReply": "给这个瓶子再加一句回复",
+      "replyingToLine": "回复某句话",
+      "cancelQuickReplyA11y": "取消快捷回复",
+      "replyPlaceholder": "写一句回复…",
+      "replyCta": "回复",
+      "cancelQuickReply": "取消"
+    },
+    "repliedOut": {
+      "title": "我回复过的海友",
+      "subtitle": "每条记录对应一只他人扔出的瓶子；「海友」为匿名代号，便于区分不同瓶主。",
+      "close": "关闭",
+      "empty": "还没有回复过别人的瓶子。去海里捞一只试试吧。",
+      "lastReplied": "上次回复",
+      "bottleAt": "瓶子",
+      "mySentReplies": "我发出的回复",
+      "quote": "引用",
+      "myWordsLabel": "我的话：",
+      "quoteOnly": "（仅引用）"
+    },
+    "toast": {
+      "loadFailed": "加载失败，请检查接口地址与网络。",
+      "loadFavoritesFailed": "收藏列表加载失败，请检查接口地址与网络。",
+      "loadRepliesFailed": "回复列表加载失败，请检查接口地址与网络。",
+      "loadReceivedFailed": "收到的回复加载失败，请检查接口地址与网络。",
+      "writeBeforeDrop": "请先写下内容再扔瓶。",
+      "dropped": "漂流瓶已投进海里。",
+      "dropFailed": "扔瓶失败。",
+      "noBottles": "海里暂时没有新瓶子。",
+      "catchFailed": "捞瓶失败。",
+      "removedFavorite": "已从收藏中移除。",
+      "addedFavorite": "已加入收藏。",
+      "alreadyFavorite": "已在收藏中。",
+      "favoriteStale": "收藏已失效，列表已刷新。",
+      "actionFailed": "操作失败，请重试。",
+      "replyEmpty": "回复不能为空。",
+      "replySent": "回复已发送。",
+      "replyFailed": "发送回复失败。"
+    }
+  }
+}

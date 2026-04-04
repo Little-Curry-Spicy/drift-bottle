@@ -2,8 +2,8 @@ import {
   createAuthedRequest,
   type DriftStats,
   type GetAccessToken,
-} from "./api";
-import type { BottlePayload, RepliedOutItem, RepliedToMeItem } from "./types";
+} from "./http";
+import type { BottlePayload, RepliedOutItem, RepliedToMeItem } from "../types";
 
 export function createDriftBottleApi(getAccessToken: GetAccessToken) {
   const request = createAuthedRequest(getAccessToken);

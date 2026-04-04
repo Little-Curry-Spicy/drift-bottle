@@ -23,7 +23,7 @@ export class BottlesService {
     @InjectRepository(BottleFavorite)
     private readonly favoriteRepo: Repository<BottleFavorite>,
     private readonly realtime: BottlesRealtimeService,
-  ) { }
+  ) {}
 
   /** 别人在我扔出的瓶子下回复的数量（不含自己回复自己） */
   /** 瓶主展示用匿名代号（不暴露完整 Clerk id） */
@@ -41,7 +41,7 @@ export class BottlesService {
    */
   private async countDistinctReplyBottles(
     viewerId: string,
-    direction: "received" | "sent",
+    direction: 'received' | 'sent',
   ): Promise<number> {
     const qb = this.replyRepo
       .createQueryBuilder('r')
@@ -65,12 +65,13 @@ export class BottlesService {
     return typeof cnt === 'string' ? Number(cnt) : 0;
   }
 
-  private async toDto(bottle: Bottle, viewerId: string): Promise<BottleResponseDto> {
+  private async toDto(
+    bottle: Bottle,
+    viewerId: string,
+  ): Promise<BottleResponseDto> {
     const replies = (bottle.replies ?? [])
       .slice()
-      .sort(
-        (a, b) => a.createdAt.getTime() - b.createdAt.getTime(),
-      );
+      .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
     return {
       id: bottle.id,
       content: bottle.content,
@@ -91,17 +92,17 @@ export class BottlesService {
     return bottle;
   }
 
-  async create(userId: string, dto: CreateBottleDto): Promise<BottleResponseDto> {
+  async create(
+    userId: string,
+    dto: CreateBottleDto,
+  ): Promise<BottleResponseDto> {
     const bottle = this.bottleRepo.create({
       authorId: userId,
       content: dto.content.trim(),
     });
 
     const saved = await this.bottleRepo.save(bottle);
-    return this.toDto(
-      await this.loadBottleWithReplies(saved.id),
-      userId,
-    );
+    return this.toDto(await this.loadBottleWithReplies(saved.id), userId);
   }
 
   /** 随机捞一条「别人的」瓶子（前端 Sea / catch） */
@@ -164,7 +165,10 @@ export class BottlesService {
     await this.replyRepo.save(reply);
 
     if (ownerId !== userId) {
-      const received = await this.countDistinctReplyBottles(ownerId, 'received');
+      const received = await this.countDistinctReplyBottles(
+        ownerId,
+        'received',
+      );
       this.realtime.notifyReceivedReplies(ownerId, received);
     }
 
@@ -221,7 +225,7 @@ export class BottlesService {
         const sorted = replies
           .slice()
           .sort((a, c) => a.createdAt.getTime() - c.createdAt.getTime());
-        const last = sorted[sorted.length - 1]!;
+        const last = sorted[sorted.length - 1];
         return {
           bottleId: bottle.id,
           bottleContent: bottle.content,
@@ -267,12 +271,12 @@ export class BottlesService {
     const bottleIds = Array.from(grouped.keys());
     const myReplies = bottleIds.length
       ? await this.replyRepo
-        .createQueryBuilder('r')
-        .innerJoinAndSelect('r.bottle', 'b')
-        .where('r.authorId = :userId', { userId })
-        .andWhere('b.id IN (:...ids)', { ids: bottleIds })
-        .orderBy('r.createdAt', 'ASC')
-        .getMany()
+          .createQueryBuilder('r')
+          .innerJoinAndSelect('r.bottle', 'b')
+          .where('r.authorId = :userId', { userId })
+          .andWhere('b.id IN (:...ids)', { ids: bottleIds })
+          .orderBy('r.createdAt', 'ASC')
+          .getMany()
       : [];
 
     const myRepliesMap = new Map<string, typeof myReplies>();
@@ -288,8 +292,8 @@ export class BottlesService {
 
     const items: RepliedToMeItemDto[] = Array.from(grouped.entries()).map(
       ([, repList]) => {
-        const bottle = repList[0]!.bottle;
-        const last = repList[repList.length - 1]!;
+        const bottle = repList[0].bottle;
+        const last = repList[repList.length - 1];
         return {
           bottleId: bottle.id,
           bottleContent: bottle.content,
@@ -299,7 +303,9 @@ export class BottlesService {
             authorMask: this.maskAuthorId(r.authorId),
             createdAt: r.createdAt.toISOString(),
           })),
-          myReplyContents: (myRepliesMap.get(bottle.id) ?? []).map((r) => r.content),
+          myReplyContents: (myRepliesMap.get(bottle.id) ?? []).map(
+            (r) => r.content,
+          ),
           lastReplyAt: last.createdAt.toISOString(),
         };
       },
@@ -314,12 +320,14 @@ export class BottlesService {
   }
 
   async getStats(userId: string): Promise<StatsResponseDto> {
-    const [thrown, favoriteCount, replied, receivedReplies] = await Promise.all([
-      this.bottleRepo.count({ where: { authorId: userId } }),
-      this.favoriteRepo.count({ where: { userId } }),
-      this.countDistinctReplyBottles(userId, "sent"),
-      this.countDistinctReplyBottles(userId, "received"),
-    ]);
+    const [thrown, favoriteCount, replied, receivedReplies] = await Promise.all(
+      [
+        this.bottleRepo.count({ where: { authorId: userId } }),
+        this.favoriteRepo.count({ where: { userId } }),
+        this.countDistinctReplyBottles(userId, 'sent'),
+        this.countDistinctReplyBottles(userId, 'received'),
+      ],
+    );
     return { thrown, favorite: favoriteCount, replied, receivedReplies };
   }
 }

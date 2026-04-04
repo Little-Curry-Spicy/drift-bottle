@@ -1,4 +1,4 @@
--- Drift bottle schema aligned with apps/mobile/src/features/drift-bottle/types.ts
+-- Drift bottle schema aligned with apps/mobile/src/drift-bottle/types.ts
 -- Bottle: id, content, mood, author (derived from author_id vs auth.uid()), replies[], createdAt
 -- Supabase Auth: RLS below uses auth.uid(). If you only use Clerk + Nest, apply the same DDL in SQL Editor
 -- then access tables with the service role key from the API (RLS bypassed), after validating the user server-side.

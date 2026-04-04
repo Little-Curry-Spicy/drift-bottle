@@ -1,22 +1,30 @@
 import { Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Animated, { FadeInUp } from "react-native-reanimated";
+import { useTranslation } from "react-i18next";
 import { authTheme } from "@/src/theme/auth";
-import { formatBottleTime } from "../datetime";
+import { formatBottleTime } from "../lib/datetime";
 import type { Bottle } from "../types";
 
+type BottleListVariant = "saved" | "mine";
+
 type BottleListProps = {
-  title: string;
+  variant: BottleListVariant;
   data: Bottle[];
-  emptyText: string;
 };
 
-export function BottleList({ title, data, emptyText }: BottleListProps) {
+export function BottleList({ variant, data }: BottleListProps) {
+  const { t } = useTranslation();
+  const title =
+    variant === "saved" ? t("drift.list.savedTitle") : t("drift.list.mineTitle");
+  const emptyText =
+    variant === "saved" ? t("drift.list.savedEmpty") : t("drift.list.mineEmpty");
+
   return (
     <View className="gap-4">
       <View className="flex-row items-center gap-2">
         <Ionicons
-          name={title === "Saved bottles" ? "heart-circle" : "albums"}
+          name={variant === "saved" ? "heart-circle" : "albums"}
           size={18}
           color={authTheme.primary}
         />
@@ -36,7 +44,7 @@ export function BottleList({ title, data, emptyText }: BottleListProps) {
             </Text>
             <Text className="leading-7 text-foreground">{item.content}</Text>
             <Text className="mt-3 text-xs text-muted-foreground">
-              {item.replies.length} replies
+              {t("drift.list.replies", { count: item.replies.length })}
             </Text>
           </Animated.View>
         ))

@@ -1,0 +1,183 @@
+{
+  "layout": {
+    "clerkKeyMissing": "Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your environment."
+  },
+  "auth": {
+    "a11y": {
+      "passwordShow": "Show password",
+      "passwordHide": "Hide password"
+    },
+    "signIn": {
+      "title": "Welcome back",
+      "username": "Username",
+      "password": "Password",
+      "usernamePlaceholder": "Enter your username",
+      "passwordPlaceholder": "Enter your password",
+      "signInCta": "Sign in",
+      "signingIn": "Signing in...",
+      "orContinue": "or continue with",
+      "connecting": "Connecting...",
+      "google": "Google",
+      "github": "GitHub",
+      "newToApp": "New to {{name}}?",
+      "createAccount": "Create an account",
+      "errorIncomplete": "Sign-in did not complete. Please try again.",
+      "errorBadCreds": "Username or password is incorrect. Please try again.",
+      "errorOAuthIncomplete": "OAuth sign-in did not complete. Please try again.",
+      "errorOAuthFailed": "OAuth sign-in failed. Please try again later.",
+      "appName": "Drift Bottle"
+    },
+    "signUp": {
+      "title": "Create account",
+      "email": "Email",
+      "username": "Username",
+      "password": "Password",
+      "verificationCode": "Verification code",
+      "emailPlaceholder": "Enter your email",
+      "usernamePlaceholder": "3–64 chars: letters, digits, _ . -",
+      "passwordPlaceholder": "At least 8 characters",
+      "codePlaceholder": "Enter 6-digit code",
+      "send": "Send",
+      "resend": "Resend",
+      "finish": "Finish sign up",
+      "verifying": "Verifying...",
+      "orContinue": "or continue with",
+      "connecting": "Connecting...",
+      "google": "Google",
+      "github": "GitHub",
+      "alreadyHave": "Already have an account?",
+      "signInLink": "Sign in",
+      "errorEnterEmail": "Please enter your email first.",
+      "errorEmailInvalid": "Please enter a valid email address.",
+      "errorPasswordShort": "Password must be at least 8 characters (Clerk policy) before sending a code.",
+      "livePasswordShort": "At least 8 characters ({{count}} entered)",
+      "errorUsernameEmpty": "Please enter a username.",
+      "errorUsernameShort": "Username must be at least 3 characters.",
+      "errorUsernameLong": "Username is too long (max 64 characters).",
+      "errorUsernameInvalid": "Username may only contain letters, digits, underscore, period, and hyphen.",
+      "errorUsernameRequired": "Your Clerk instance requires a username: enter one and tap finish again.",
+      "errorSendFirst": "Tap Send to receive a verification code first.",
+      "errorCodeLength": "Enter the 6-digit email code.",
+      "errorVerifyIncomplete": "Verification did not complete. Please try again.",
+      "errorOAuthIncomplete": "OAuth sign-in did not complete. Please try again.",
+      "fallbackSignUpFailed": "Sign up failed. Please check your email and password.",
+      "fallbackInvalidCode": "Invalid or expired verification code.",
+      "fallbackOAuthFailed": "OAuth sign-in failed. Please try again.",
+      "fallbackResendFailed": "Failed to send verification code. Please try again."
+    }
+  },
+  "drift": {
+    "tabs": {
+      "sea": "Sea",
+      "throw": "Drop",
+      "favorites": "Saved",
+      "mine": "Mine"
+    },
+    "tabHints": {
+      "sea": "Catch a bottle and read what someone shared.",
+      "throw": "Write your mood and drop it into the sea.",
+      "favorites": "Bottles you saved live here.",
+      "mine": "All bottles you have dropped."
+    },
+    "stats": {
+      "dropped": "Dropped",
+      "saved": "Saved",
+      "repliesToMe": "Replies to me",
+      "repliesByMe": "People I replied to",
+      "tapToView": "Tap to view",
+      "a11yButton": "{{label}}, current {{value}}, tap to view details"
+    },
+    "list": {
+      "savedTitle": "Saved bottles",
+      "mineTitle": "My bottles",
+      "savedEmpty": "No saved bottles yet.",
+      "mineEmpty": "You have not dropped any bottles yet.",
+      "replies_one": "{{count}} reply",
+      "replies_other": "{{count}} replies"
+    },
+    "sea": {
+      "title": "Catch a bottle",
+      "subtitle": "Meet an anonymous story from someone out there.",
+      "catchNow": "Catch now",
+      "catching": "Catching…",
+      "replyPlaceholder": "Write a reply...",
+      "sendReply": "Send reply",
+      "save": "Save",
+      "saved": "Saved",
+      "emptyCatch": "Your caught bottle will appear here.",
+      "a11ySendReply": "Send reply",
+      "a11yRemoveSaved": "Remove from saved",
+      "a11ySaveBottle": "Save bottle"
+    },
+    "throw": {
+      "title": "Drop a bottle",
+      "subtitle": "Write what is on your mind and send it anonymously.",
+      "placeholder": "What do you want to share right now?",
+      "cta": "Drop bottle",
+      "previewTitle": "Sea drift preview",
+      "previewHint": "The glass bottle gently bobs and tilts with the waves."
+    },
+    "profile": {
+      "defaultName": "User",
+      "avatarLabel": "Profile photo",
+      "signOut": "Sign out",
+      "signingOut": "Signing out…",
+      "signOutA11y": "Sign out",
+      "language": "Language",
+      "langEn": "English",
+      "langZh": "中文"
+    },
+    "repliedToMe": {
+      "title": "Replies to my bottles",
+      "subtitle": "Replies others left on bottles you dropped. Masks distinguish different people.",
+      "close": "Close",
+      "empty": "No replies yet. Drop a bottle into the sea first.",
+      "myBottle": "My bottle",
+      "latest": "Latest",
+      "theirReply": "Their reply",
+      "replyThisLine": "Reply to this",
+      "replyThisLineA11y": "Reply to this message",
+      "mySentReplies": "My replies",
+      "notRepliedYet": "You have not replied to this bottle yet.",
+      "quote": "Quote",
+      "quoteOnly": "(quote only)",
+      "addReply": "Add another reply to this bottle",
+      "replyingToLine": "Replying to a message",
+      "cancelQuickReplyA11y": "Cancel quick reply",
+      "replyPlaceholder": "Write a reply...",
+      "replyCta": "Send",
+      "cancelQuickReply": "Cancel"
+    },
+    "repliedOut": {
+      "title": "People I replied to",
+      "subtitle": "Each row is someone else’s bottle. “Sea friend” is an anonymous mask.",
+      "close": "Close",
+      "empty": "You have not replied to anyone yet. Try catching a bottle.",
+      "lastReplied": "Last replied",
+      "bottleAt": "Bottle",
+      "mySentReplies": "My replies",
+      "quote": "Quote",
+      "myWordsLabel": "My words: ",
+      "quoteOnly": "(quote only)"
+    },
+    "toast": {
+      "loadFailed": "Could not load data. Check API URL and network.",
+      "loadFavoritesFailed": "Could not load favorites. Check API URL and network.",
+      "loadRepliesFailed": "Could not load replies. Check API URL and network.",
+      "loadReceivedFailed": "Could not load received replies. Check API URL and network.",
+      "writeBeforeDrop": "Write something before you drop a bottle.",
+      "dropped": "Bottle dropped into the sea.",
+      "dropFailed": "Could not drop bottle.",
+      "noBottles": "No new bottles in the sea right now.",
+      "catchFailed": "Could not catch a bottle.",
+      "removedFavorite": "Removed from saved.",
+      "addedFavorite": "Added to saved.",
+      "alreadyFavorite": "Already in saved.",
+      "favoriteStale": "Saved list was out of date; refreshed.",
+      "actionFailed": "Something went wrong. Please try again.",
+      "replyEmpty": "Reply cannot be empty.",
+      "replySent": "Reply sent.",
+      "replyFailed": "Could not send reply."
+    }
+  }
+}

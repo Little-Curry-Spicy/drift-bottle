@@ -11,6 +11,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { authTheme } from "@/src/theme/auth";
 
 type ThrowTabProps = {
@@ -24,6 +25,7 @@ export function ThrowTab({
   onDraftChange,
   onThrow,
 }: ThrowTabProps) {
+  const { t } = useTranslation();
   const bobY = useSharedValue(0);
   const tilt = useSharedValue(0);
   const waveFrontX = useSharedValue(0);
@@ -76,18 +78,18 @@ export function ThrowTab({
         <View className="flex-row items-center gap-2">
           <Ionicons name="paper-plane" size={18} color={authTheme.primary} />
           <Text className="text-lg font-sans-semibold" style={{ color: authTheme.title }}>
-            Drop a bottle
+            {t("drift.throw.title")}
           </Text>
         </View>
         <Text className="mt-2 text-sm leading-6" style={{ color: authTheme.body }}>
-          Write what is on your mind and send it anonymously.
+          {t("drift.throw.subtitle")}
         </Text>
         <TextInput
           value={draft}
           onChangeText={onDraftChange}
           multiline
           maxLength={200}
-          placeholder="What do you want to share right now?"
+          placeholder={t("drift.throw.placeholder")}
           placeholderTextColor={authTheme.placeholder}
           className="mt-5 min-h-28 rounded-2xl border border-border bg-background p-4 text-foreground"
         />
@@ -98,7 +100,7 @@ export function ThrowTab({
           className="mt-4 items-center rounded-2xl px-4 py-3.5"
           style={{ backgroundColor: authTheme.primary, opacity: draft.trim() ? 1 : 0.55 }}
         >
-          <Text className="font-sans-semibold text-white">发送漂流瓶</Text>
+          <Text className="font-sans-semibold text-white">{t("drift.throw.cta")}</Text>
         </Pressable>
       </Animated.View>
 
@@ -107,10 +109,10 @@ export function ThrowTab({
         className="rounded-3xl border border-border/70 bg-card px-5 py-5"
       >
         <Text className="mb-2 text-sm font-sans-medium" style={{ color: authTheme.title }}>
-          Sea drift preview
+          {t("drift.throw.previewTitle")}
         </Text>
         <Text className="mb-4 text-xs leading-5" style={{ color: authTheme.body }}>
-          玻璃瓶会跟随海浪轻微上下浮动与倾斜。
+          {t("drift.throw.previewHint")}
         </Text>
         <View
           className="h-52 items-center justify-end overflow-hidden rounded-2xl border"

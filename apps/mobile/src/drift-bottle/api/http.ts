@@ -110,5 +110,3 @@ export function createAuthedRequest(getAccessToken: GetAccessToken) {
     return parseEnvelope<T>(response.status, raw);
   };
 }
-
-export { createDriftBottleApi } from "./drift-bottle-api";

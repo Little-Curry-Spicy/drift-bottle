@@ -1,28 +1,28 @@
-import { ActivityIndicator, Text, TextInput, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
 import { authTheme } from "@/src/theme/auth";
-import { formatBottleTime } from "../datetime";
+import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
+import { ActivityIndicator, Text, TextInput, View } from "react-native";
+import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
+import { formatBottleTime } from "../lib/datetime";
 import type { Bottle } from "../types";
 import { TouchableScale } from "./TouchableScale";
 
-/** 与主色（蓝）区分，收藏用玫红系 */
+/** 捞瓶 / 发送回复 / 收藏 统一固定高度（px），避免 minHeight + padding 不一致 */
+const SEA_PRIMARY_CTA_H = 44;
+
 const FAVORITE_FILLED = "#e11d48";
 const FAVORITE_SOFT_BG = "#fff1f2";
 const FAVORITE_SOFT_BORDER = "#fda4af";
 
 type SeaTabProps = {
   currentBottle: Bottle | null;
-  /** 当前捞到的瓶子是否已在收藏列表中 */
   isFavorited: boolean;
   replyDraft: string;
   catchLoading?: boolean;
   onReplyDraftChange: (value: string) => void;
   onCatchBottle: () => void;
   onSendReply: () => void;
-  /** 收藏开关；与旧版 `onFavorite` 二选一或同时传入时优先此项 */
   onToggleFavorite?: (bottle: Bottle) => void;
-  /** @deprecated 请改用 onToggleFavorite，保留以兼容旧调用方 */
   onFavorite?: (bottle: Bottle) => void;
 };
 
@@ -37,6 +37,7 @@ export function SeaTab({
   onToggleFavorite,
   onFavorite,
 }: SeaTabProps) {
+  const { t } = useTranslation();
   const handleFavoritePress = onToggleFavorite ?? onFavorite;
 
   return (
@@ -48,17 +49,18 @@ export function SeaTab({
         <View className="flex-row items-center gap-2">
           <Ionicons name="compass" size={18} color={authTheme.primary} />
           <Text className="text-lg font-sans-semibold" style={{ color: authTheme.title }}>
-            Catch a bottle
+            {t("drift.sea.title")}
           </Text>
         </View>
         <Text className="mt-2 text-sm leading-6" style={{ color: authTheme.body }}>
-          Meet an anonymous story from someone out there.
+          {t("drift.sea.subtitle")}
         </Text>
         <TouchableScale
           onPress={onCatchBottle}
           disabled={catchLoading}
-          className="mt-5 items-center rounded-2xl px-4 py-3.5"
+          className="mt-5 items-center justify-center rounded-2xl px-4"
           style={{
+            height: SEA_PRIMARY_CTA_H,
             backgroundColor: authTheme.primary,
             opacity: catchLoading ? 0.75 : 1,
           }}
@@ -66,12 +68,12 @@ export function SeaTab({
         >
           <View className="flex-row items-center gap-2">
             {catchLoading ? (
-              <ActivityIndicator color="#ffffff" />
+              <ActivityIndicator color="#ffffff" size="small" />
             ) : (
-              <Ionicons name="fish" size={16} color="#ffffff" />
+              <Ionicons name="fish" size={15} color="#ffffff" />
             )}
             <Text className="font-sans-semibold text-white">
-              {catchLoading ? "Catching…" : "Catch now"}
+              {catchLoading ? t("drift.sea.catching") : t("drift.sea.catchNow")}
             </Text>
           </View>
         </TouchableScale>
@@ -91,29 +93,35 @@ export function SeaTab({
             <TextInput
               value={replyDraft}
               onChangeText={onReplyDraftChange}
-              placeholder="Write a reply..."
+              placeholder={t("drift.sea.replyPlaceholder")}
               placeholderTextColor={authTheme.placeholder}
-              className="rounded-2xl border border-border bg-background px-4 py-3.5 text-foreground"
+              className="rounded-2xl border px-4 py-3.5"
+              style={{
+                borderColor: authTheme.inputBorder,
+                backgroundColor: authTheme.cardBg,
+              }}
             />
-            <View className="flex-row gap-3">
+            <View className="flex-row items-stretch gap-3">
               <TouchableScale
                 onPress={onSendReply}
-                className="min-h-[52px] flex-1 items-center justify-center rounded-2xl px-4 py-3.5"
-                style={{ backgroundColor: authTheme.primary }}
+                className="flex-1 items-center justify-center rounded-2xl px-4"
+                style={{ height: SEA_PRIMARY_CTA_H, backgroundColor: authTheme.primary }}
                 pressedScale={0.97}
                 accessibilityRole="button"
-                accessibilityLabel="Send reply"
+                accessibilityLabel={t("drift.sea.a11ySendReply")}
               >
-                <View className="flex-row items-center gap-1.5">
-                  <Ionicons name="chatbubble-ellipses" size={15} color="#eff6ff" />
-                  <Text className="font-sans-semibold text-white">Send reply</Text>
+                <View className="flex-row items-center gap-2">
+                  <Ionicons name="chatbubble-ellipses" size={15} color="#ffffff" />
+                  <Text className="font-sans-semibold text-white">{t("drift.sea.sendReply")}</Text>
                 </View>
               </TouchableScale>
               <TouchableScale
                 onPress={() => handleFavoritePress?.(currentBottle)}
                 disabled={!handleFavoritePress}
-                className="min-h-[52px] w-[76] items-center justify-center rounded-2xl py-2"
+                className="shrink-0 items-center justify-center rounded-2xl px-2.5"
                 style={{
+                  height: SEA_PRIMARY_CTA_H,
+                  minWidth: 92,
                   borderWidth: isFavorited ? 0 : 2,
                   borderColor: isFavorited ? "transparent" : FAVORITE_SOFT_BORDER,
                   backgroundColor: isFavorited ? FAVORITE_FILLED : FAVORITE_SOFT_BG,
@@ -121,20 +129,25 @@ export function SeaTab({
                 }}
                 pressedScale={0.96}
                 accessibilityRole="button"
-                accessibilityLabel={isFavorited ? "Remove from saved" : "Save bottle"}
+                accessibilityLabel={
+                  isFavorited ? t("drift.sea.a11yRemoveSaved") : t("drift.sea.a11ySaveBottle")
+                }
                 accessibilityState={{ selected: isFavorited }}
               >
-                <Ionicons
-                  name={isFavorited ? "heart" : "heart-outline"}
-                  size={24}
-                  color={isFavorited ? "#ffffff" : FAVORITE_FILLED}
-                />
-                <Text
-                  className="mt-0.5 text-[11px] font-sans-semibold"
-                  style={{ color: isFavorited ? "#ffe4e6" : FAVORITE_FILLED }}
-                >
-                  {isFavorited ? "Saved" : "Save"}
-                </Text>
+                <View className="flex-row items-center gap-1.5">
+                  <Ionicons
+                    name={isFavorited ? "heart" : "heart-outline"}
+                    size={15}
+                    color={isFavorited ? "#ffffff" : FAVORITE_FILLED}
+                  />
+                  <Text
+                    className="text-xs font-sans-semibold"
+                    style={{ color: isFavorited ? "#ffe4e6" : FAVORITE_FILLED }}
+                    numberOfLines={1}
+                  >
+                    {isFavorited ? t("drift.sea.saved") : t("drift.sea.save")}
+                  </Text>
+                </View>
               </TouchableScale>
             </View>
           </View>
@@ -142,7 +155,7 @@ export function SeaTab({
       ) : (
         <View className="rounded-3xl border border-dashed border-border/80 bg-card px-5 py-4">
           <Text className="text-sm leading-6 text-muted-foreground">
-            Your caught bottle will appear here.
+            {t("drift.sea.emptyCatch")}
           </Text>
         </View>
       )}

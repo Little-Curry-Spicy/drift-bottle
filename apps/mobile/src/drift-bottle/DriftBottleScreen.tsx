@@ -1,19 +1,21 @@
 import { authTheme } from "@/src/theme/auth";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, Text, useWindowDimensions, View } from "react-native";
 import Animated, { FadeInDown, FadeInRight } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { BottleList } from "../components/BottleList";
-import { BottomTabs } from "../components/BottomTabs";
-import { MineProfileSection } from "../components/MineProfileSection";
-import { RepliedOutModal } from "../components/RepliedOutModal";
-import { RepliedToMeModal } from "../components/RepliedToMeModal";
-import { SeaTab } from "../components/SeaTab";
-import { StatCard } from "../components/StatCard";
-import { ThrowTab } from "../components/ThrowTab";
-import { useDriftBottleMvp } from "../hooks/useDriftBottleMvp";
+import { BottleList } from "./components/BottleList";
+import { BottomTabs } from "./components/BottomTabs";
+import { MineProfileSection } from "./components/MineProfileSection";
+import { RepliedOutModal } from "./components/RepliedOutModal";
+import { RepliedToMeModal } from "./components/RepliedToMeModal";
+import { SeaTab } from "./components/SeaTab";
+import { StatCard } from "./components/StatCard";
+import { ThrowTab } from "./components/ThrowTab";
+import { useDriftBottleMvp } from "./hooks/useDriftBottleMvp";
 
 export function DriftBottleScreen() {
+  const { t } = useTranslation();
   const { state, stats, repliedOut, repliedToMe, actions } = useDriftBottleMvp();
   const [repliedOutModalOpen, setRepliedOutModalOpen] = useState(false);
   const [repliedToMeModalOpen, setRepliedToMeModalOpen] = useState(false);
@@ -21,23 +23,21 @@ export function DriftBottleScreen() {
   const isTablet = width >= 768;
   const isDesktop = width >= 1024;
   const horizontalPadding = isDesktop ? 32 : isTablet ? 24 : 16;
-  const activeTabLabel =
-    state.activeTab === "sea"
-      ? "Sea"
-      : state.activeTab === "throw"
-        ? "Drop"
-        : state.activeTab === "favorites"
-          ? "Saved"
-          : "Mine";
+  /** 统计卡片：宽屏一行 4 列，窄屏换行 2×2 */
+  const statsSingleRow = width >= 720;
+  const statsGap = 12;
+  const statsInnerWidth = width - horizontalPadding * 2;
+  const statsNarrowColWidth = (statsInnerWidth - statsGap) / 2;
+  const statSlotStyle = statsSingleRow
+    ? ({ flex: 1, minWidth: 0 } as const)
+    : ({ width: statsNarrowColWidth } as const);
 
-  const activeTabHint =
-    state.activeTab === "sea"
-      ? "捞一个瓶子，看看此刻谁在海上说话。"
-      : state.activeTab === "throw"
-        ? "写下心情，把它轻轻扔进海里。"
-        : state.activeTab === "favorites"
-          ? "你收藏过的瓶子会保存在这里。"
-          : "查看你投递过的全部瓶子。";
+  const activeTabLabel = t(`drift.tabs.${state.activeTab}`);
+
+  const activeTabHint = useMemo(() => {
+    const key = `drift.tabHints.${state.activeTab}` as const;
+    return t(key);
+  }, [state.activeTab, t]);
 
   return (
     <SafeAreaView
@@ -56,29 +56,44 @@ export function DriftBottleScreen() {
 
       <Animated.View
         entering={FadeInDown.duration(260)}
-        className="flex-row gap-3 pb-4 pt-4"
-        style={{ paddingHorizontal: horizontalPadding }}
+        style={{
+          flexDirection: "row",
+          flexWrap: statsSingleRow ? "nowrap" : "wrap",
+          gap: statsGap,
+          paddingTop: 16,
+          paddingBottom: 16,
+          paddingHorizontal: horizontalPadding,
+        }}
       >
-        <StatCard label="Dropped" value={stats.thrown} />
-        <StatCard label="Saved" value={stats.favorite} />
-        <StatCard
-          label="他人回复我的"
-          value={stats.receivedReplies ?? 0}
-          showDot={state.repliesNotifyDot}
-          showTapHint
-          onPress={() => setRepliedToMeModalOpen(true)}
-        />
-        <StatCard
-          label="我回复过的海友"
-          value={stats.replied ?? 0}
-          showTapHint
-          onPress={() => setRepliedOutModalOpen(true)}
-        />
+        <View style={statSlotStyle}>
+          <StatCard kind="dropped" label={t("drift.stats.dropped")} value={stats.thrown} />
+        </View>
+        <View style={statSlotStyle}>
+          <StatCard kind="saved" label={t("drift.stats.saved")} value={stats.favorite} />
+        </View>
+        <View style={statSlotStyle}>
+          <StatCard
+            kind="repliesToMe"
+            label={t("drift.stats.repliesToMe")}
+            value={stats.receivedReplies ?? 0}
+            showDot={state.repliesNotifyDot}
+            showTapHint
+            onPress={() => setRepliedToMeModalOpen(true)}
+          />
+        </View>
+        <View style={statSlotStyle}>
+          <StatCard
+            kind="repliesByMe"
+            label={t("drift.stats.repliesByMe")}
+            value={stats.replied ?? 0}
+            showTapHint
+            onPress={() => setRepliedOutModalOpen(true)}
+          />
+        </View>
       </Animated.View>
 
       <ScrollView
         className="flex-1"
-        // RN Web：flex 子项默认 minHeight 为 auto，ScrollView 会被内容撑满并把底部 Tabs 顶出视口；minHeight: 0 让中间区域在 flex 内正确收缩并可滚动
         style={{ flex: 1, minHeight: 0 }}
         contentContainerStyle={{
           paddingTop: 6,
@@ -113,20 +128,12 @@ export function DriftBottleScreen() {
             />
           )}
           {state.activeTab === "favorites" && (
-            <BottleList
-              title="Saved bottles"
-              data={state.favorites}
-              emptyText="No saved bottles yet."
-            />
+            <BottleList variant="saved" data={state.favorites} />
           )}
           {state.activeTab === "mine" && (
             <View className="gap-5">
               <MineProfileSection />
-              <BottleList
-                title="My bottles"
-                data={state.myBottles}
-                emptyText="You have not dropped any bottles yet."
-              />
+              <BottleList variant="mine" data={state.myBottles} />
             </View>
           )}
         </Animated.View>

@@ -16,7 +16,7 @@
 
 ## 数据库（Supabase）
 
-前端 `Bottle`（见 `apps/mobile/src/features/drift-bottle/types.ts`）字段与表对应关系如下：
+前端 `Bottle`（见 `apps/mobile/src/drift-bottle/types.ts`）字段与表对应关系如下：
 
 | 前端字段 | 数据库 |
 |----------|--------|
@@ -108,7 +108,7 @@ pnpm api:build
 - **失败（4xx/5xx）**：`{ "success": false, "code": <HTTP 状态码>, "message": "<说明>", "data": null }`
 - **限流 429**：与失败结构相同（`express-rate-limit` 自定义 `handler`）。
 
-实现位置：`apps/api/src/common/interceptors/transform-response.interceptor.ts`、`apps/api/src/common/filters/all-exceptions.filter.ts`；移动端在 `apps/mobile/src/features/drift-bottle/api.ts` 的 `parseEnvelope` 中自动拆包。Swagger 文档里的 `responses` 仍描述 **`data` 内部的形状**，实际响应多一层外壳。
+实现位置：`apps/api/src/common/interceptors/transform-response.interceptor.ts`、`apps/api/src/common/filters/all-exceptions.filter.ts`；移动端在 `apps/mobile/src/drift-bottle/api/http.ts` 的 `parseEnvelope` 中自动拆包。Swagger 文档里的 `responses` 仍描述 **`data` 内部的形状**，实际响应多一层外壳。
 
 ### 漂流瓶 API（与移动端结构对齐）
 
@@ -144,6 +144,10 @@ EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_xxx
 
 配置后将启用：`/` 落地页、`/sign-in`、`/sign-up`、`/bottles` 等路由（见 `apps/mobile/app`）。
 
+- **密码可见性**：`/sign-in` 与 `/sign-up` 的密码框右侧为眼睛图标（`Ionicons`），点击在密文 / 明文间切换；读屏文案见 `auth.a11y.passwordShow`、`auth.a11y.passwordHide`（`locales/zh.json`、`en.json`）。
+- **注册用户名**：若 Clerk Dashboard 将 **Username** 设为必填，`/sign-up` 会收集用户名并在 `create` / `update` 中提交；邮箱已验证但仍报 `missing_requirements`（缺 `username`）时，填好用户名后再次点「完成注册」即可调用 `signUp.update` 收尾。
+- **登录标识**：`/sign-in` 文案与占位符为 **用户名**；`signIn.create({ identifier })` 仍走 Clerk 统一标识符逻辑，若用户输入已验证邮箱也可登录（与控制台策略一致）。
+
 ## Monorepo 说明（Expo / Metro）
 
 - `apps/mobile/metro.config.js` 已配置 `watchFolders` 与 `nodeModulesPaths`，指向仓库根，便于解析根目录 `node_modules` 与 workspace 包（与 [Expo Monorepos](https://docs.expo.dev/guides/monorepos/) 一致）。
@@ -158,8 +162,15 @@ EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_xxx
 ## 移动端主要目录
 
 - `apps/mobile/app/`：路由与页面  
-- `apps/mobile/src/features/drift-bottle/`：漂流瓶功能模块  
+- `apps/mobile/src/drift-bottle/`：漂流瓶功能模块（`DriftBottleScreen.tsx` + `index.ts` 入口；`components/` UI、`hooks/useDriftBottleMvp.ts`、`api/` HTTP+SSE、`lib/` 工具与常量；域模型见根目录 `types.ts`）  
+- `apps/mobile/src/i18n/`：多语言（`i18next` + `react-i18next` + `expo-localization`；文案在 `locales/en.json`、`locales/zh.json`）  
 - `apps/mobile/global.css`：主题变量与全局样式  
+
+### 多语言（移动端）
+
+- **默认语言**：跟随系统（`zh*` → 中文，否则英文）；首次启动后可在 **我的 → 界面语言** 切换 **English / 中文**，选择会写入 AsyncStorage（`app_language`）。  
+- **代码用法**：在组件内 `import { useTranslation } from "react-i18next"`，调用 `const { t } = useTranslation()`，文案键见上述 JSON（如 `t("drift.tabs.sea")`）。  
+- **时间格式**：`lib/datetime.ts` 中 `formatBottleTime` 会随当前语言使用 `zh-CN` / `en-US` 区域格式。  
 
 ## 全仓库 Lint
 
@@ -175,7 +186,7 @@ pnpm lint
 
 ## UI 迭代记录（欧美审美适配）
 
-- 漂流瓶主流程文案已统一为英文语境，避免中英混杂  
+- 移动端已支持中/英双语切换；默认仍可按系统语言与产品定位选择展示语言  
 - 页面间距与卡片圆角统一，强化轻量、松弛的阅读节奏  
 - 主题色从高饱和绿色调整为更中性的自然绿，降低视觉疲劳  
 - 底部导航和内容卡采用一致的弱边框与柔和背景，接近欧美产品常见的克制风格  

@@ -7,10 +7,7 @@ import { rateLimit } from 'express-rate-limit';
 import helmet from 'helmet';
 import { WinstonModule } from 'nest-winston';
 import { AppModule } from './app.module';
-import {
-  AllExceptionsFilter,
-  TransformResponseInterceptor,
-} from './common';
+import { AllExceptionsFilter, TransformResponseInterceptor } from './common';
 import { createWinstonTransports } from './logger/winston.logger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -69,7 +66,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('docs', app, document);
   const port = Number(process.env.PORT ?? 3000);
-  logger.log(chalk.green(`Swagger UI: ${chalk.blue(`http://localhost:${port}/docs`)}`));
+  logger.log(
+    chalk.green(`Swagger UI: ${chalk.blue(`http://localhost:${port}/docs`)}`),
+  );
   await app.listen(port);
 }
 bootstrap();
