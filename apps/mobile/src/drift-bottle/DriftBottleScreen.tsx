@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { ScrollView, Text, useWindowDimensions, View } from "react-native";
 import Animated, { FadeInDown, FadeInRight } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { AppLanguageToggle } from "./components/AppLanguageToggle";
 import { BottleList } from "./components/BottleList";
 import { BottomTabs } from "./components/BottomTabs";
 import { MineProfileSection } from "./components/MineProfileSection";
@@ -46,12 +47,17 @@ export function DriftBottleScreen() {
       style={{ backgroundColor: authTheme.screenBg }}
     >
       <View className="px-4 pt-3" style={{ paddingHorizontal: horizontalPadding }}>
-        <Text className="text-2xl font-sans-semibold" style={{ color: authTheme.title }}>
-          {activeTabLabel}
-        </Text>
-        <Text className="mt-2 text-sm leading-6" style={{ color: authTheme.body }}>
-          {activeTabHint}
-        </Text>
+        <View className="flex-row items-start justify-between gap-3">
+          <View className="min-w-0 flex-1 pr-1">
+            <Text className="text-2xl font-sans-semibold" style={{ color: authTheme.title }}>
+              {activeTabLabel}
+            </Text>
+            <Text className="mt-2 text-sm leading-6" style={{ color: authTheme.body }}>
+              {activeTabHint}
+            </Text>
+          </View>
+          <AppLanguageToggle compact />
+        </View>
       </View>
 
       <Animated.View

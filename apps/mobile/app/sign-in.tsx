@@ -1,3 +1,5 @@
+import { getClerkOAuthRedirectUrl } from "@/src/auth/clerk-oauth-redirect";
+import { AppLanguageToggle } from "@/src/drift-bottle/components/AppLanguageToggle";
 import { authTheme } from "@/src/theme/auth";
 import { AuthTextInput } from "@/src/theme/AuthTextInput";
 import { useAuth, useSSO, useSignIn } from "@clerk/clerk-expo";
@@ -54,6 +56,7 @@ export default function SignInPage() {
       setOauthLoading(provider);
       const result = await startSSOFlow({
         strategy: provider === "google" ? "oauth_google" : "oauth_github",
+        redirectUrl: getClerkOAuthRedirectUrl(),
       });
 
       if (result.createdSessionId) {
@@ -69,8 +72,11 @@ export default function SignInPage() {
   };
 
   return (
-    <SafeAreaView className="flex-1 px-6" style={{ backgroundColor: authTheme.screenBg }}>
-      <View className="mx-auto w-full max-w-[520px] flex-1 mt-10">
+    <SafeAreaView className="flex-1" style={{ backgroundColor: authTheme.screenBg }}>
+      <View className="flex-row justify-end px-6 pt-1">
+        <AppLanguageToggle compact />
+      </View>
+      <View className="mx-auto w-full max-w-[520px] flex-1 px-6 mt-6">
         <View className="items-center">
           <View className="h-[150px] w-[150px] items-center justify-center overflow-hidden">
             <DotLottie

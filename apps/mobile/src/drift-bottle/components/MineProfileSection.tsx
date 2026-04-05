@@ -4,12 +4,10 @@ import { Image } from "expo-image";
 import { useState } from "react";
 import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import { useTranslation } from "react-i18next";
+import { getClerkPostSignOutRedirectUrl } from "@/src/auth/clerk-oauth-redirect";
 import { authTheme } from "@/src/theme/auth";
-import type { AppLanguage } from "@/src/i18n/i18n";
-import { persistAppLanguage } from "@/src/i18n/persist-language";
-
 export function MineProfileSection() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { user, isLoaded } = useUser();
   const { signOut } = useClerk();
   const [signingOut, setSigningOut] = useState(false);
@@ -24,36 +22,18 @@ export function MineProfileSection() {
 
   const email = user?.primaryEmailAddress?.emailAddress;
   const initial = displayName.trim().slice(0, 1).toUpperCase() || "?";
-  const activeLang: AppLanguage = i18n.language.startsWith("zh") ? "zh" : "en";
-
   const handleSignOut = async () => {
     try {
       setSigningOut(true);
-      await signOut();
+      const redirectUrl = getClerkPostSignOutRedirectUrl();
+      if (redirectUrl) {
+        await signOut({ redirectUrl });
+      } else {
+        await signOut();
+      }
     } finally {
       setSigningOut(false);
     }
-  };
-
-  const langChip = (lng: AppLanguage, label: string) => {
-    const selected = activeLang === lng;
-    return (
-      <Pressable
-        onPress={() => void persistAppLanguage(lng)}
-        className="rounded-xl border px-3 py-2 active:opacity-80"
-        style={{
-          borderColor: selected ? authTheme.primary : authTheme.cardBorder,
-          backgroundColor: selected ? `${authTheme.primary}18` : authTheme.inputBg,
-        }}
-      >
-        <Text
-          className="text-xs font-sans-semibold"
-          style={{ color: selected ? authTheme.primary : authTheme.body }}
-        >
-          {label}
-        </Text>
-      </Pressable>
-    );
   };
 
   return (
@@ -102,16 +82,6 @@ export function MineProfileSection() {
               ID · {user.id}
             </Text>
           ) : null}
-        </View>
-      </View>
-
-      <View className="mt-4">
-        <Text className="mb-2 text-xs font-sans-medium" style={{ color: authTheme.subtitle }}>
-          {t("drift.profile.language")}
-        </Text>
-        <View className="flex-row flex-wrap gap-2">
-          {langChip("en", t("drift.profile.langEn"))}
-          {langChip("zh", t("drift.profile.langZh"))}
         </View>
       </View>
 

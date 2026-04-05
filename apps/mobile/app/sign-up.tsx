@@ -1,3 +1,4 @@
+import { getClerkOAuthRedirectUrl } from "@/src/auth/clerk-oauth-redirect";
 import {
   getLiveEmailIssue,
   getLivePasswordIssue,
@@ -6,6 +7,7 @@ import {
   signUpCredentialsSchema,
   type SignUpCredentialIssueCode,
 } from "@/src/auth/sign-up-credentials";
+import { AppLanguageToggle } from "@/src/drift-bottle/components/AppLanguageToggle";
 import { authTheme } from "@/src/theme/auth";
 import { useAuth, useSSO, useSignUp } from "@clerk/clerk-expo";
 import { Ionicons } from "@expo/vector-icons";
@@ -216,6 +218,7 @@ export default function SignUpPage() {
       setOauthLoading(provider);
       const result = await startSSOFlow({
         strategy: provider === "google" ? "oauth_google" : "oauth_github",
+        redirectUrl: getClerkOAuthRedirectUrl(),
       });
 
       if (result.createdSessionId) {
@@ -256,10 +259,13 @@ export default function SignUpPage() {
   return (
     <SafeAreaView
       edges={["top", "left", "right", "bottom"]}
-      className="flex-1 px-6 pb-10"
+      className="flex-1 pb-10"
       style={{ backgroundColor: authTheme.screenBg }}
     >
-      <View className="mx-auto mt-10 w-full max-w-[520px] flex-1 pb-8">
+      <View className="flex-row justify-end px-6 pt-1">
+        <AppLanguageToggle compact />
+      </View>
+      <View className="mx-auto mt-6 w-full max-w-[520px] flex-1 px-6 pb-8">
         <View className="mx-auto mb-4 w-[220px] items-center justify-center overflow-hidden">
           <DotLottie
             source={require("../assets/lottie/bootstrap.lottie")}

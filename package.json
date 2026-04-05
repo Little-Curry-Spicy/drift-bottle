@@ -6,6 +6,7 @@
     "mobile:android": "pnpm --filter mobile android",
     "mobile:ios": "pnpm --filter mobile ios",
     "mobile:web": "pnpm --filter mobile web",
+    "mobile:export:web": "pnpm --filter mobile export:web",
     "web": "pnpm --filter web dev",
     "web:build": "pnpm --filter web build",
     "web:preview": "pnpm --filter web start",

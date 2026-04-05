@@ -1,4 +1,31 @@
-# 漂流瓶（Monorepo）
+# 漂流瓶 Drift Bottle（Monorepo）
+
+**中文**：一款以「漂流瓶」为隐喻的匿名心情分享应用：登录后可 **扔瓶**（写下当下心情）、在 **海洋** 里 **捞瓶**、回复与收藏；数据可与后端 API / Supabase 对齐。界面支持 **English / 中文** 切换（默认跟随系统，选择会持久化）。
+
+**English**: An anonymous “message in a bottle”–style app: sign in, **drop** notes, **catch** others’ bottles in the **sea**, reply and save favorites; data can sync with the Nest API / Supabase. The UI supports **English / 中文** (system default with a persisted manual choice).
+
+<p align="center">
+  <img src="apps/mobile/assets/images/login.png" alt="Drift Bottle sign-in" width="31%" />
+  &nbsp;
+  <img src="apps/mobile/assets/images/sea.png" alt="Sea — catch bottles" width="31%" />
+  &nbsp;
+  <img src="apps/mobile/assets/images/drop.png" alt="Drop — compose bottle" width="31%" />
+</p>
+
+<p align="center">
+  <sub><b>登录</b> Sign-in</sub> · <sub><b>海洋</b> Sea</sub> · <sub><b>扔瓶</b> Drop</sub>
+</p>
+
+## 技术栈
+
+| 层级 | 说明 |
+|------|------|
+| 仓库 | **pnpm** workspace 单体仓库 |
+| 移动端 | **Expo ~54**、**React Native**、**expo-router**、**TypeScript**、**NativeWind**（Tailwind）、**Clerk** 鉴权、**i18next** + **expo-localization**、**ky** HTTP |
+| 官网 | **Next.js**（App Router）、**Tailwind** |
+| 后端 | **NestJS**、**TypeORM**、统一响应封装、Swagger |
+| 数据 | **Supabase（PostgreSQL）** 迁移与 RLS；可选由 API 持 **service role** 写库 |
+| 共享 | **`@drift-bottle/shared`**（workspace 包） |
 
 本仓库为 **pnpm workspace** 单体仓库：移动端为 **Expo + React Native**，服务端为 **NestJS**，共享类型放在 **packages/shared**。
 

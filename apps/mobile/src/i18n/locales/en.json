@@ -7,6 +7,9 @@
       "passwordShow": "Show password",
       "passwordHide": "Hide password"
     },
+    "ssoCallback": {
+      "completing": "Completing sign-in…"
+    },
     "signIn": {
       "title": "Welcome back",
       "username": "Username",
@@ -111,11 +114,38 @@
     },
     "throw": {
       "title": "Drop a bottle",
-      "subtitle": "Write what is on your mind and send it anonymously.",
+      "subtitle": "Let the bottle slip into the sea and see where the current takes it.",
       "placeholder": "What do you want to share right now?",
       "cta": "Drop bottle",
-      "previewTitle": "Sea drift preview",
-      "previewHint": "The glass bottle gently bobs and tilts with the waves."
+      "instrumentTag": "Console",
+      "targetLabel": "Throw path",
+      "dragHint": "Drag pointer",
+      "directionLabel": "Heading",
+      "speedLabel": "Speed",
+      "rangeLabel": "Range",
+      "windLabel": "Wind",
+      "messageTitle": "Bottle message",
+      "messageHint": "The current decides where it drifts. Your words decide who stops to read it.",
+      "summaryLabel": "This launch",
+      "windState": {
+        "calm": "Calm",
+        "steady": "Steady",
+        "fast": "Fast"
+      },
+      "range": {
+        "nearby": {
+          "title": "Near",
+          "hint": "10 - 500 km"
+        },
+        "far": {
+          "title": "Far",
+          "hint": "500 - 5,000 km"
+        },
+        "further": {
+          "title": "Cross",
+          "hint": "5,000 - 18,000 km"
+        }
+      }
     },
     "profile": {
       "defaultName": "User",

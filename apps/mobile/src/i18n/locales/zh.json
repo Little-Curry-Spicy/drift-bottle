@@ -7,6 +7,9 @@
       "passwordShow": "显示密码",
       "passwordHide": "隐藏密码"
     },
+    "ssoCallback": {
+      "completing": "正在完成登录…"
+    },
     "signIn": {
       "title": "欢迎回来",
       "username": "用户名",
@@ -111,11 +114,38 @@
     },
     "throw": {
       "title": "扔漂流瓶",
-      "subtitle": "写下此刻的心情，匿名投进海里。",
+      "subtitle": "把这只瓶子轻轻送进海里，看看它会漂向哪里。",
       "placeholder": "此刻想分享些什么？",
       "cta": "发送漂流瓶",
-      "previewTitle": "海面预览",
-      "previewHint": "玻璃瓶会跟随海浪轻微上下浮动与倾斜。"
+      "instrumentTag": "投放台",
+      "targetLabel": "投放轨迹",
+      "dragHint": "拖动指针",
+      "directionLabel": "航向",
+      "speedLabel": "速度",
+      "rangeLabel": "距离",
+      "windLabel": "风速",
+      "messageTitle": "瓶中内容",
+      "messageHint": "海流会决定它漂向哪里，你的文字决定谁会停下来读它。",
+      "summaryLabel": "本次投放",
+      "windState": {
+        "calm": "平缓",
+        "steady": "稳定",
+        "fast": "强劲"
+      },
+      "range": {
+        "nearby": {
+          "title": "近岸",
+          "hint": "10 - 500 km"
+        },
+        "far": {
+          "title": "远洋",
+          "hint": "500 - 5,000 km"
+        },
+        "further": {
+          "title": "横渡",
+          "hint": "5,000 - 18,000 km"
+        }
+      }
     },
     "profile": {
       "defaultName": "用户",
